@@ -14,3 +14,16 @@ export const processTask = inngest.createFunction(
         return { message: `Task ${event.data.id} complete`, result };
     }
 );
+
+
+export const codingAgentFunction = inngest.createFunction(
+    {
+        id: "code-agent",
+        triggers: {
+            event: "code-agent/run"
+        }
+    },
+    async function ({event, step}) {
+        
+    }
+)
