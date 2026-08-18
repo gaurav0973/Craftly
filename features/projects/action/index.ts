@@ -1,3 +1,4 @@
+"use server";
 import { MessageRole, MessageType } from "@/app/generated/prisma/enums";
 import { getCurrentUser } from "@/features/auth/action";
 import { inngest } from "@/features/inngest/client";

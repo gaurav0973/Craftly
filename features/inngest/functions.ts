@@ -6,7 +6,7 @@ import {
     createNetwork,
     createState,
     createTool,
-    gemini,
+    openai,
 } from "@inngest/agent-kit";
 import z from "zod";
 
@@ -24,25 +24,12 @@ export interface CodeAgentState {
     files: Record<string, string>;
 }
 
-export const processTask = inngest.createFunction(
-    { id: "process-task", triggers: { event: "app/task.created" } },
-    async ({ event, step }) => {
-        const result = await step.run("handle-task", async () => {
-            return { processed: true, id: event.data.id };
-        });
-
-        await step.sleep("pause", "1s");
-
-        return { message: `Task ${event.data.id} complete`, result };
-    },
-);
-
 export const codeAgentFunction = inngest.createFunction(
     { id: "code-agent", triggers: { event: "code-agent/run" } },
     async ({ event, step }) => {
         const sandboxId = await step.run("get-sandbox-id", async () => {
             const sandbox = await Sandbox.create({
-                template: "ugwj9f6y2wocdpps7omf",
+                template: "0awqf35ohrnx2e7zgxo4",
             });
 
             return sandbox.sandboxId;
@@ -76,24 +63,19 @@ export const codeAgentFunction = inngest.createFunction(
             { messages: previousMessages },
         );
 
-        const geminiModel = gemini({
-            model: "gemini-2.5-flash",
-            step,
-            apiKey: process.env.GEMINI_API_KEY!,
-            defaultParameters: {
-                generationConfig: {
-                    temperature: 0,
-                    maxOutputTokens: 8192,
-                    thinkingConfig: { thinkingBudget: 0 },
-                },
-            },
-        } as Parameters<typeof gemini>[0]);
+        const openaiModel = openai({
+            model: "gpt-4o-mini",
+            apiKey: process.env.OPENAI_API_KEY!,
+        });
 
         const codeAgent = createAgent({
             name: "code-agent",
             description: "An expert coding agent",
             system: PROMPT,
-            model: gemini({ model: "gemini-2.5-flash" }),
+            model: openai({
+                model: "gpt-4o-mini",
+                apiKey: process.env.OPENAI_API_KEY!,
+            }),
             tools: [
                 // 1. Terminal
                 createTool({
@@ -249,7 +231,7 @@ export const codeAgentFunction = inngest.createFunction(
         const { summary, files } = result.state.data;
 
         const makeTextAgent = (name: string, system: string) =>
-            createAgent({ name, system, model: geminiModel });
+            createAgent({ name, system, model: openaiModel });
 
         const fragmentTitleGenerator = makeTextAgent(
             "fragment-title-generator",

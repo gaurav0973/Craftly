@@ -109,7 +109,7 @@ box-shadow-active: 2px 2px 0px 0px #1E293B; // Press effect
 No blur. Solid offset colors.
 
 ### Textures & Patterns
-- **Dot Grid**: A background of small dots (`bg-[url(...)]`) in strict formation.
+- **Dot Grid**: A background of small dots (e.g. radial gradient or dot pattern) in strict formation.
 - **Squiggles**: SVG paths used as section dividers or underlining for headings.
 - **Confetti**: Small SVG shapes (triangles, circles) absolutely positioned behind main content blocks.
 
