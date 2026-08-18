@@ -1,5 +1,6 @@
 import { MessageRole, MessageType } from "@/app/generated/prisma/enums";
 import { getCurrentUser } from "@/features/auth/action";
+import { inngest } from "@/features/inngest/client";
 import { prisma } from "@/lib/prisma";
 import { generateSlug } from "random-word-slugs";
 
@@ -27,6 +28,13 @@ export async function createProject(value: string){
     })
 
     // TODO=> inngest call
+    await inngest.send({
+        name: "code-agent/run",
+        data:{
+            value,
+            projectId: project.id
+        }
+    })
 
     return project
 }
