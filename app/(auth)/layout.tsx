@@ -6,147 +6,57 @@ interface AuthLayoutProps {
 
 export default function AuthLayout({ children }: AuthLayoutProps) {
     return (
-        <div
-            style={{
-                minHeight: "100vh",
-                background: "var(--background)",
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                justifyContent: "center",
-                position: "relative",
-                overflow: "hidden",
-            }}
-        >
-            {/* ── Decorative Shapes ─────────────────────────────── */}
+        <div className="min-h-screen bg-90s-tile flex flex-col items-center justify-center p-4">
+            {/* Windows 95 Auth Dialog Box */}
+            <div className="win-window max-w-md w-full shadow-2xl">
+                {/* Title Bar */}
+                <div className="win-titlebar">
+                    <div className="flex items-center gap-2">
+                        <span className="font-mono">🔐</span>
+                        <span>Craftly_Auth_Dialog.exe - [Windows 95 Security]</span>
+                    </div>
+                    <div className="flex items-center">
+                        <Link href="/" className="win-btn-control text-black no-underline">
+                            ✕
+                        </Link>
+                    </div>
+                </div>
 
-            {/* Large amber circle top-left */}
-            <div
-                style={{
-                    position: "absolute",
-                    top: "-100px",
-                    left: "-100px",
-                    width: "350px",
-                    height: "350px",
-                    borderRadius: "50%",
-                    background: "var(--tertiary)",
-                    opacity: 0.2,
-                    pointerEvents: "none",
-                }}
-            />
+                {/* Dialog Content */}
+                <div className="p-4 sm:p-6 bg-[#c0c0c0]">
+                    {/* Header Banner */}
+                    <div className="flex items-center gap-3 mb-4 pb-3 border-b border-[#808080]">
+                        <div className="w-10 h-10 bg-[#000080] text-white flex items-center justify-center font-mono font-bold text-lg border-2 border-white shadow-[1px_1px_0_#000000]">
+                            C:\
+                        </div>
+                        <div>
+                            <h1 className="text-lg font-black uppercase text-black tracking-tight">
+                                Craftly Studio Login
+                            </h1>
+                            <p className="text-xs font-mono text-[#808080]">
+                                Authenticate to access your HTML, CSS & JS workspaces.
+                            </p>
+                        </div>
+                    </div>
 
-            {/* Pink square bottom-right */}
-            <div
-                style={{
-                    position: "absolute",
-                    bottom: "-60px",
-                    right: "-60px",
-                    width: "280px",
-                    height: "280px",
-                    borderRadius: "var(--radius-lg)",
-                    background: "var(--secondary)",
-                    opacity: 0.15,
-                    transform: "rotate(20deg)",
-                    pointerEvents: "none",
-                }}
-            />
+                    {/* Clerk Component Container */}
+                    <div className="bevel-inset p-2 bg-white mb-4">
+                        {children}
+                    </div>
 
-            {/* Violet circle mid-right */}
-            <div
-                style={{
-                    position: "absolute",
-                    top: "30%",
-                    right: "8%",
-                    width: "120px",
-                    height: "120px",
-                    borderRadius: "50%",
-                    background: "var(--accent)",
-                    opacity: 0.12,
-                    pointerEvents: "none",
-                }}
-            />
-
-            {/* Dot grid bottom-left */}
-            <div
-                className="dot-grid"
-                style={{
-                    position: "absolute",
-                    bottom: "5%",
-                    left: "5%",
-                    width: "200px",
-                    height: "200px",
-                    pointerEvents: "none",
-                    opacity: 0.6,
-                }}
-            />
-
-            {/* ── Brand Logo ────────────────────────────────────── */}
-            <Link
-                href="/"
-                style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "0.5rem",
-                    textDecoration: "none",
-                    marginBottom: "1.5rem",
-                    position: "relative",
-                    zIndex: 1,
-                }}
-            >
-                <span
-                    style={{
-                        width: "40px",
-                        height: "40px",
-                        borderRadius: "50%",
-                        background: "var(--accent)",
-                        border: "2px solid var(--foreground)",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        boxShadow: "3px 3px 0px var(--foreground)",
-                    }}
-                >
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="white">
-                        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
-                    </svg>
-                </span>
-                <span
-                    style={{
-                        fontFamily: "var(--font-outfit), Outfit, sans-serif",
-                        fontWeight: 800,
-                        fontSize: "1.6rem",
-                        color: "var(--foreground)",
-                    }}
-                >
-                    Craft<span style={{ color: "var(--accent)" }}>ly</span>
-                </span>
-            </Link>
-
-            {/* ── Clerk Component ───────────────────────────────── */}
-            <div
-                style={{
-                    position: "relative",
-                    zIndex: 1,
-                }}
-                className="animate-pop-in"
-            >
-                {children}
+                    {/* Dialog Footer Actions */}
+                    <div className="flex items-center justify-between pt-2 text-xs font-mono">
+                        <Link href="/" className="text-[#0000ff] underline hover:text-[#ff0000]">
+                            ← Back to Home
+                        </Link>
+                        <span className="text-[#808080]">System Status: Online</span>
+                    </div>
+                </div>
             </div>
 
-            {/* ── Footer note ──────────────────────────────────── */}
-            <p
-                style={{
-                    marginTop: "1.5rem",
-                    fontSize: "0.8rem",
-                    color: "var(--muted-foreground)",
-                    position: "relative",
-                    zIndex: 1,
-                }}
-            >
-                By signing in you agree to our{" "}
-                <span style={{ color: "var(--accent)", fontWeight: 600, cursor: "pointer" }}>Terms</span>{" "}
-                &{" "}
-                <span style={{ color: "var(--accent)", fontWeight: 600, cursor: "pointer" }}>Privacy Policy</span>
+            {/* Bottom Copyright Note */}
+            <p className="mt-4 text-xs font-mono text-[#808080] text-center">
+                Craftly Web Engine • 100% Client-Side Pure HTML/CSS/JS Generator
             </p>
         </div>
     );

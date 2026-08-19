@@ -5,7 +5,7 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { vscDarkPlus } from "react-syntax-highlighter/dist/esm/styles/prism";
-import { Check, Copy, Terminal, Code2, FileCode } from "lucide-react";
+import { Check, Copy, Terminal, FileCode } from "lucide-react";
 
 interface MarkdownMessageProps {
     content: string;
@@ -34,43 +34,16 @@ function CodeBlock({
     const displayLanguage = language || "code";
 
     return (
-        <div
-            style={{
-                margin: "0.75rem 0",
-                borderRadius: "12px",
-                overflow: "hidden",
-                border: "2px solid #334155",
-                background: "#1e1e1e",
-                boxShadow: "0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -2px rgba(0,0,0,0.1)",
-            }}
-        >
-            {/* Code Header */}
-            <div
-                style={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "space-between",
-                    padding: "0.4rem 0.85rem",
-                    background: "#252526",
-                    borderBottom: "1px solid #334155",
-                    fontSize: "0.75rem",
-                    color: "#94a3b8",
-                }}
-            >
-                <div style={{ display: "flex", alignItems: "center", gap: "0.45rem" }}>
+        <div className="win-window my-2 bg-[#c0c0c0]">
+            {/* Windows Title Bar for Code Snippet */}
+            <div className="win-titlebar bg-gradient-to-r from-[#000080] to-[#1084d0] py-0.5 px-2">
+                <div className="flex items-center gap-1.5 text-xs">
                     {displayLanguage === "bash" || displayLanguage === "sh" ? (
-                        <Terminal size={14} color="#38bdf8" />
+                        <Terminal size={12} color="#00ff00" />
                     ) : (
-                        <FileCode size={14} color="#a78bfa" />
+                        <FileCode size={12} color="#ffff00" />
                     )}
-                    <span
-                        style={{
-                            fontFamily: "monospace",
-                            fontWeight: 600,
-                            textTransform: "lowercase",
-                            color: "#e2e8f0",
-                        }}
-                    >
+                    <span className="font-mono text-[11px] font-bold text-white uppercase">
                         {displayLanguage}
                     </span>
                 </div>
@@ -78,47 +51,34 @@ function CodeBlock({
                 <button
                     type="button"
                     onClick={handleCopy}
-                    style={{
-                        display: "inline-flex",
-                        alignItems: "center",
-                        gap: "0.3rem",
-                        padding: "0.2rem 0.5rem",
-                        background: copied ? "#059669" : "#334155",
-                        color: "white",
-                        border: "none",
-                        borderRadius: "6px",
-                        fontSize: "0.7rem",
-                        fontWeight: 600,
-                        cursor: "pointer",
-                        transition: "all 0.15s ease",
-                    }}
+                    className="btn-win95 text-[10px] py-0.5 px-1.5 flex items-center gap-1 bg-[#c0c0c0] text-black"
                 >
                     {copied ? (
                         <>
-                            <Check size={12} />
-                            <span>Copied!</span>
+                            <Check size={10} color="#00aa00" />
+                            <span>COPIED!</span>
                         </>
                     ) : (
                         <>
-                            <Copy size={12} />
-                            <span>Copy</span>
+                            <Copy size={10} />
+                            <span>COPY</span>
                         </>
                     )}
                 </button>
             </div>
 
             {/* Code Content */}
-            <div style={{ fontSize: "0.85rem", overflowX: "auto" }}>
+            <div className="bevel-inset bg-[#1e1e1e] font-mono text-xs overflow-x-auto">
                 <SyntaxHighlighter
                     language={displayLanguage}
                     style={vscDarkPlus}
                     customStyle={{
                         margin: 0,
-                        padding: "0.85rem 1rem",
+                        padding: "0.75rem",
                         background: "#1e1e1e",
-                        fontFamily: "JetBrains Mono, Fira Code, Menlo, monospace",
-                        fontSize: "0.82rem",
-                        lineHeight: 1.6,
+                        fontFamily: "Courier New, monospace",
+                        fontSize: "0.8rem",
+                        lineHeight: 1.5,
                     }}
                     showLineNumbers={value.trim().split("\n").length > 3}
                     lineNumberStyle={{
@@ -139,171 +99,73 @@ function CodeBlock({
 export function MarkdownMessage({ content, isUser }: MarkdownMessageProps) {
     if (isUser) {
         return (
-            <div style={{ whiteSpace: "pre-wrap", wordBreak: "break-word" }}>
+            <div className="font-mono text-xs whitespace-pre-wrap break-words leading-relaxed text-black">
                 {content}
             </div>
         );
     }
 
     return (
-        <div
-            style={{
-                fontSize: "0.9rem",
-                lineHeight: 1.65,
-                color: "#1e293b",
-                wordBreak: "break-word",
-            }}
-        >
+        <div className="text-xs leading-relaxed text-black break-words font-sans">
             <ReactMarkdown
                 remarkPlugins={[remarkGfm]}
                 components={{
                     h1: ({ children }) => (
-                        <h1
-                            style={{
-                                fontFamily: "var(--font-outfit), Outfit, sans-serif",
-                                fontSize: "1.25rem",
-                                fontWeight: 800,
-                                marginTop: "1rem",
-                                marginBottom: "0.5rem",
-                                color: "#0f172a",
-                            }}
-                        >
+                        <h1 className="text-base font-black uppercase text-black mt-2 mb-1 border-b border-[#808080] pb-1">
                             {children}
                         </h1>
                     ),
                     h2: ({ children }) => (
-                        <h2
-                            style={{
-                                fontFamily: "var(--font-outfit), Outfit, sans-serif",
-                                fontSize: "1.1rem",
-                                fontWeight: 700,
-                                marginTop: "0.85rem",
-                                marginBottom: "0.4rem",
-                                color: "#0f172a",
-                            }}
-                        >
+                        <h2 className="text-sm font-black uppercase text-black mt-2 mb-1">
                             {children}
                         </h2>
                     ),
                     h3: ({ children }) => (
-                        <h3
-                            style={{
-                                fontFamily: "var(--font-outfit), Outfit, sans-serif",
-                                fontSize: "1rem",
-                                fontWeight: 700,
-                                marginTop: "0.75rem",
-                                marginBottom: "0.35rem",
-                                color: "#0f172a",
-                            }}
-                        >
+                        <h3 className="text-xs font-bold uppercase text-black mt-1.5 mb-0.5">
                             {children}
                         </h3>
                     ),
                     p: ({ children }) => (
-                        <p style={{ margin: "0.45rem 0" }}>{children}</p>
+                        <p className="my-1 text-black">{children}</p>
                     ),
                     ul: ({ children }) => (
-                        <ul
-                            style={{
-                                paddingLeft: "1.25rem",
-                                margin: "0.5rem 0",
-                                listStyleType: "disc",
-                            }}
-                        >
+                        <ul className="pl-4 my-1 list-disc text-black">
                             {children}
                         </ul>
                     ),
                     ol: ({ children }) => (
-                        <ol
-                            style={{
-                                paddingLeft: "1.25rem",
-                                margin: "0.5rem 0",
-                                listStyleType: "decimal",
-                            }}
-                        >
+                        <ol className="pl-4 my-1 list-decimal text-black">
                             {children}
                         </ol>
                     ),
                     li: ({ children }) => (
-                        <li style={{ margin: "0.25rem 0" }}>{children}</li>
+                        <li className="my-0.5 text-black">{children}</li>
                     ),
                     blockquote: ({ children }) => (
-                        <blockquote
-                            style={{
-                                borderLeft: "4px solid var(--accent)",
-                                paddingLeft: "0.75rem",
-                                margin: "0.65rem 0",
-                                color: "#475569",
-                                fontStyle: "italic",
-                                background: "rgba(139, 92, 246, 0.05)",
-                                padding: "0.4rem 0.75rem",
-                                borderRadius: "0 8px 8px 0",
-                            }}
-                        >
+                        <blockquote className="panel-notepad my-2 text-black border-l-4 border-[#000080]">
                             {children}
                         </blockquote>
                     ),
                     table: ({ children }) => (
-                        <div style={{ overflowX: "auto", margin: "0.75rem 0" }}>
-                            <table
-                                style={{
-                                    width: "100%",
-                                    borderCollapse: "collapse",
-                                    fontSize: "0.82rem",
-                                    border: "2px solid #cbd5e1",
-                                    borderRadius: "8px",
-                                    overflow: "hidden",
-                                }}
-                            >
-                                {children}
-                            </table>
+                        <div className="overflow-x-auto my-2 bevel-inset">
+                            <table className="table-retro">{children}</table>
                         </div>
                     ),
-                    thead: ({ children }) => (
-                        <thead style={{ background: "#f1f5f9" }}>{children}</thead>
-                    ),
-                    th: ({ children }) => (
-                        <th
-                            style={{
-                                padding: "0.5rem 0.75rem",
-                                textAlign: "left",
-                                fontWeight: 700,
-                                borderBottom: "2px solid #cbd5e1",
-                                color: "#1e293b",
-                            }}
-                        >
-                            {children}
-                        </th>
-                    ),
-                    td: ({ children }) => (
-                        <td
-                            style={{
-                                padding: "0.45rem 0.75rem",
-                                borderBottom: "1px solid #e2e8f0",
-                            }}
-                        >
-                            {children}
-                        </td>
-                    ),
+                    thead: ({ children }) => <thead>{children}</thead>,
+                    th: ({ children }) => <th>{children}</th>,
+                    td: ({ children }) => <td>{children}</td>,
                     a: ({ href, children }) => (
                         <a
                             href={href}
                             target="_blank"
                             rel="noopener noreferrer"
-                            style={{
-                                color: "var(--accent)",
-                                fontWeight: 600,
-                                textDecoration: "underline",
-                                textUnderlineOffset: "3px",
-                            }}
+                            className="text-[#0000ff] underline hover:text-[#ff0000] font-bold"
                         >
                             {children}
                         </a>
                     ),
                     strong: ({ children }) => (
-                        <strong style={{ fontWeight: 700, color: "#0f172a" }}>
-                            {children}
-                        </strong>
+                        <strong className="font-bold text-black">{children}</strong>
                     ),
                     code: ({ className, children, ...props }) => {
                         const match = /language-(\w+)/.exec(className || "");
@@ -312,16 +174,7 @@ export function MarkdownMessage({ content, isUser }: MarkdownMessageProps) {
                         if (isInline) {
                             return (
                                 <code
-                                    style={{
-                                        background: "#f1f5f9",
-                                        color: "#8b5cf6",
-                                        padding: "0.15rem 0.35rem",
-                                        borderRadius: "4px",
-                                        fontSize: "0.82em",
-                                        fontFamily: "monospace",
-                                        fontWeight: 600,
-                                        border: "1px solid #e2e8f0",
-                                    }}
+                                    className="bg-white text-[#000080] px-1 py-0.5 border border-[#808080] font-mono text-[11px] font-bold"
                                     {...props}
                                 >
                                     {children}

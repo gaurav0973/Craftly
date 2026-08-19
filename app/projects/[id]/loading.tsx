@@ -1,85 +1,28 @@
 export default function Loading() {
     return (
-        <div
-            style={{
-                display: "flex",
-                height: "calc(100vh - 3.5rem)",
-                overflow: "hidden",
-            }}
-        >
-            {/* Left chat skeleton */}
-            <div
-                style={{
-                    width: "380px",
-                    minWidth: "340px",
-                    flexShrink: 0,
-                    display: "flex",
-                    flexDirection: "column",
-                    borderRight: "2px solid var(--border)",
-                    background: "white",
-                    padding: "1rem",
-                    gap: "0.75rem",
-                }}
-            >
-                {/* Header */}
-                <div
-                    style={{
-                        height: "48px",
-                        background: "var(--muted)",
-                        borderRadius: "var(--radius-sm)",
-                        animation: "pulse-glow 1.5s ease infinite",
-                        marginBottom: "0.5rem",
-                    }}
-                />
-                {/* Messages */}
-                {[80, 65, 85, 55, 70].map((w, i) => (
-                    <div
-                        key={i}
-                        style={{
-                            height: "52px",
-                            width: `${w}%`,
-                            background: "var(--muted)",
-                            borderRadius: "var(--radius-md)",
-                            animation: "pulse-glow 1.5s ease infinite",
-                            animationDelay: `${i * 150}ms`,
-                            alignSelf: i % 2 === 0 ? "flex-end" : "flex-start",
-                        }}
-                    />
-                ))}
-            </div>
+        <div className="flex-1 p-4 bg-90s-tile flex items-center justify-center min-h-[calc(100vh-4.2rem)]">
+            <div className="win-window max-w-sm w-full p-6 text-center shadow-xl">
+                <div className="win-titlebar -mx-6 -mt-6 mb-4">
+                    <div className="flex items-center gap-1.5 text-xs">
+                        <span>⏳</span>
+                        <span>Craftly_Engine.exe - [Loading Project...]</span>
+                    </div>
+                </div>
 
-            {/* Right preview skeleton */}
-            <div
-                style={{
-                    flex: 1,
-                    background: "var(--muted)",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    flexDirection: "column",
-                    gap: "1rem",
-                }}
-            >
-                <div
-                    style={{
-                        width: "60px",
-                        height: "60px",
-                        borderRadius: "50%",
-                        border: "3px solid var(--accent)",
-                        borderTopColor: "transparent",
-                        animation: "spin-slow 1s linear infinite",
-                    }}
-                />
-                <p
-                    style={{
-                        fontFamily: "var(--font-outfit), Outfit, sans-serif",
-                        fontWeight: 600,
-                        color: "var(--muted-foreground)",
-                        fontSize: "0.9rem",
-                    }}
-                >
-                    Loading project...
+                <div className="text-3xl mb-3 animate-bounce">💾</div>
+                <h3 className="font-bold text-sm uppercase text-black mb-1">
+                    Loading Website Workspace...
+                </h3>
+                <p className="font-mono text-xs text-[#808080] mb-4">
+                    Retrieving project records and sandbox state.
                 </p>
+
+                {/* Retro Beveled Progress Bar */}
+                <div className="bevel-inset p-1 bg-white mb-2">
+                    <div className="h-5 bg-[#000080] flex items-center justify-center text-[10px] font-mono text-white font-bold animate-pulse">
+                        PLEASE WAIT...
+                    </div>
+                </div>
             </div>
         </div>
     );

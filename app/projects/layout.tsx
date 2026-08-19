@@ -19,123 +19,62 @@ export default async function ProjectsLayout({
     await onBoardUserToDatabase();
 
     return (
-        <div
-            style={{
-                minHeight: "100vh",
-                background: "var(--background)",
-                display: "flex",
-                flexDirection: "column",
-            }}
-        >
-            {/* ── Header ─────────────────────────────────────────── */}
-            <header
-                style={{
-                    background: "white",
-                    borderBottom: "2px solid var(--border)",
-                    position: "sticky",
-                    top: 0,
-                    zIndex: 50,
-                    boxShadow: "0 2px 0px var(--border)",
-                }}
-            >
-                <div
-                    style={{
-                        maxWidth: "1200px",
-                        margin: "0 auto",
-                        padding: "0 1.5rem",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "space-between",
-                        height: "3.5rem",
-                    }}
-                >
-                    {/* Logo */}
-                    <Link
-                        href="/"
-                        style={{
-                            display: "flex",
-                            alignItems: "center",
-                            gap: "0.4rem",
-                            textDecoration: "none",
-                        }}
-                    >
-                        <span
-                            style={{
-                                width: "28px",
-                                height: "28px",
-                                borderRadius: "50%",
-                                background: "var(--accent)",
-                                border: "2px solid var(--foreground)",
-                                display: "flex",
-                                alignItems: "center",
-                                justifyContent: "center",
-                                boxShadow: "2px 2px 0px var(--foreground)",
-                            }}
-                        >
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="white">
-                                <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
-                            </svg>
-                        </span>
-                        <span
-                            style={{
-                                fontFamily: "var(--font-outfit), Outfit, sans-serif",
-                                fontWeight: 800,
-                                fontSize: "1.2rem",
-                                color: "var(--foreground)",
-                            }}
-                        >
-                            Craft<span style={{ color: "var(--accent)" }}>ly</span>
-                        </span>
-                    </Link>
+        <div className="min-h-screen bg-90s-tile flex flex-col text-black">
+            {/* ── Windows 95 System Header ──────────────────────── */}
+            <header className="bevel-outset mx-2 mt-2 bg-[#c0c0c0] sticky top-0 z-50">
+                {/* Title Bar */}
+                <div className="win-titlebar">
+                    <div className="flex items-center gap-2">
+                        <span className="font-mono text-xs">💾</span>
+                        <span>Craftly_Studio_95.exe - [Website Projects Explorer]</span>
+                    </div>
+                    <div className="flex items-center">
+                        <span className="win-btn-control">_</span>
+                        <span className="win-btn-control">□</span>
+                        <Link href="/" className="win-btn-control text-black no-underline">✕</Link>
+                    </div>
+                </div>
 
-                    {/* Nav center */}
-                    <nav style={{ display: "flex", gap: "0.25rem" }}>
-                        <Link
-                            href="/projects"
-                            style={{
-                                display: "flex",
-                                alignItems: "center",
-                                gap: "0.4rem",
-                                padding: "0.4rem 0.9rem",
-                                borderRadius: "var(--radius-full)",
-                                background: "var(--accent)",
-                                color: "white",
-                                fontFamily: "var(--font-outfit), Outfit, sans-serif",
-                                fontWeight: 700,
-                                fontSize: "0.85rem",
-                                textDecoration: "none",
-                                border: "2px solid var(--foreground)",
-                                boxShadow: "2px 2px 0px var(--foreground)",
-                            }}
-                        >
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                                <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
-                                <polyline points="9 22 9 12 15 12 15 22" />
-                            </svg>
-                            Projects
+                {/* Toolbar */}
+                <div className="flex items-center justify-between px-3 py-1.5 border-b border-[#808080] text-xs">
+                    <div className="flex items-center gap-3">
+                        <Link href="/" className="font-black text-sm tracking-tight text-black no-underline flex items-center gap-1.5">
+                            <span className="bg-[#000080] text-white px-1.5 py-0.5 border border-black font-mono font-bold">C:\&gt;</span>
+                            <span className="font-black text-base">CRAFT<span className="text-[#0000ff]">LY</span></span>
                         </Link>
-                    </nav>
 
-                    {/* User button */}
-                    <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
-                        <UserButton
-                            appearance={{
-                                elements: {
-                                    avatarBox: {
-                                        width: "34px",
-                                        height: "34px",
-                                        border: "2px solid var(--foreground)",
-                                        boxShadow: "2px 2px 0px var(--foreground)",
-                                    },
-                                },
-                            }}
-                        />
+                        <div className="hidden sm:flex items-center gap-1 border-l border-[#808080] pl-3">
+                            <Link
+                                href="/projects"
+                                className="btn-win95 text-xs py-1 px-2.5 flex items-center gap-1.5"
+                            >
+                                <span>📁</span>
+                                <span>My Websites</span>
+                            </Link>
+                            <Link
+                                href="/"
+                                className="btn-win95 text-xs py-1 px-2.5 flex items-center gap-1.5"
+                            >
+                                <span>🌐</span>
+                                <span>Home</span>
+                            </Link>
+                        </div>
+                    </div>
+
+                    {/* Right Toolbar Actions */}
+                    <div className="flex items-center gap-3">
+                        <span className="hidden md:inline font-mono text-[11px] text-[#808080]">
+                            READY (Pure HTML/CSS/JS Engine)
+                        </span>
+                        <div className="bevel-outset p-0.5 bg-[#c0c0c0] flex items-center">
+                            <UserButton />
+                        </div>
                     </div>
                 </div>
             </header>
 
-            {/* ── Main ────────────────────────────────────────────── */}
-            <main style={{ flex: 1, display: "flex", flexDirection: "column" }}>
+            {/* ── Main Workspace ─────────────────────────────────── */}
+            <main className="flex-1 flex flex-col">
                 {children}
             </main>
         </div>

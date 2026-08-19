@@ -1,43 +1,36 @@
 import { QueryProvider } from "@/components/providers/query-provider";
 import type { Metadata } from "next";
-import { Outfit, Plus_Jakarta_Sans } from "next/font/google";
 import { ClerkProvider } from "@clerk/nextjs";
 import "./globals.css";
 
-const outfit = Outfit({
-    variable: "--font-outfit",
-    subsets: ["latin"],
-    weight: ["400", "500", "600", "700", "800"],
-    display: "swap",
-});
-
-const plusJakartaSans = Plus_Jakarta_Sans({
-    variable: "--font-plus-jakarta",
-    subsets: ["latin"],
-    weight: ["400", "500", "600", "700"],
-    display: "swap",
-});
-
 export const metadata: Metadata = {
-    title: "Craftly — Build Apps with AI",
+    title: "Craftly 95 — Pure HTML, CSS & JavaScript AI Website Generator",
     description:
-        "Describe what you want to build and Craftly's AI will generate a full working app in seconds. No coding required.",
-    keywords: ["AI app builder", "no-code", "app generator", "Craftly"],
+        "Generate 100% clean, authentic, dependency-free HTML, CSS, and JavaScript websites in seconds with AI. Back to the web fundamentals!",
+    keywords: [
+        "HTML CSS JS generator",
+        "AI website builder",
+        "no-framework",
+        "pure HTML",
+        "retro web",
+        "Craftly",
+    ],
     openGraph: {
-        title: "Craftly — Build Apps with AI",
+        title: "Craftly 95 — Pure HTML, CSS & JS AI Builder",
         description:
-            "Describe what you want to build and Craftly's AI will generate a full working app in seconds.",
+            "Describe your website idea and Craftly generates clean HTML, CSS & JS files with live instant sandbox preview.",
         type: "website",
     },
 };
 
-export default function RootLayout({ children }: LayoutProps<"/">) {
+export default function RootLayout({
+    children,
+}: {
+    children: React.ReactNode;
+}) {
     return (
-        <html
-            lang="en"
-            className={`${outfit.variable} ${plusJakartaSans.variable} h-full antialiased`}
-        >
-            <body className="min-h-full flex flex-col">
+        <html lang="en" className="h-full bg-90s-tile">
+            <body className="min-h-full flex flex-col bg-90s-tile text-black font-sans antialiased selection:bg-[#000080] selection:text-white">
                 <ClerkProvider>
                     <QueryProvider>{children}</QueryProvider>
                 </ClerkProvider>

@@ -7,18 +7,15 @@ import {
     FileCode,
     FileText,
     FileJson,
-    Folder,
     FolderOpen,
     Copy,
     Check,
     Download,
     Search,
     ChevronRight,
-    ChevronDown,
     X,
     File,
     Code,
-    Sparkles,
 } from "lucide-react";
 
 interface CodeEditorViewProps {
@@ -29,63 +26,55 @@ interface CodeEditorViewProps {
 function getFileMeta(fileName: string) {
     const ext = fileName.split(".").pop()?.toLowerCase() || "";
     switch (ext) {
-        case "tsx":
-        case "jsx":
-            return {
-                language: "tsx",
-                color: "#61dafb",
-                icon: FileCode,
-                label: "React",
-            };
-        case "ts":
-            return {
-                language: "typescript",
-                color: "#3178c6",
-                icon: FileCode,
-                label: "TypeScript",
-            };
-        case "js":
-        case "mjs":
-            return {
-                language: "javascript",
-                color: "#f7df1e",
-                icon: FileCode,
-                label: "JavaScript",
-            };
-        case "css":
-            return {
-                language: "css",
-                color: "#38bdf8",
-                icon: FileCode,
-                label: "CSS",
-            };
         case "html":
+        case "htm":
             return {
                 language: "html",
                 color: "#e34f26",
                 icon: Code,
                 label: "HTML",
+                tag: "[HTML]",
+            };
+        case "css":
+            return {
+                language: "css",
+                color: "#0000ff",
+                icon: FileCode,
+                label: "CSS",
+                tag: "[CSS]",
+            };
+        case "js":
+        case "mjs":
+            return {
+                language: "javascript",
+                color: "#b8860b",
+                icon: FileCode,
+                label: "JavaScript",
+                tag: "[JS]",
             };
         case "json":
             return {
                 language: "json",
-                color: "#fbbf24",
+                color: "#008000",
                 icon: FileJson,
                 label: "JSON",
+                tag: "[JSON]",
             };
         case "md":
             return {
                 language: "markdown",
-                color: "#a78bfa",
+                color: "#800080",
                 icon: FileText,
                 label: "Markdown",
+                tag: "[MD]",
             };
         default:
             return {
                 language: "text",
-                color: "#94a3b8",
+                color: "#000000",
                 icon: File,
                 label: ext.toUpperCase() || "File",
+                tag: `[${ext.toUpperCase() || "FILE"}]`,
             };
     }
 }
@@ -168,369 +157,180 @@ export function CodeEditorView({ files }: CodeEditorViewProps) {
 
     if (filePaths.length === 0) {
         return (
-            <div
-                style={{
-                    height: "100%",
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    color: "#94a3b8",
-                    gap: "0.75rem",
-                    background: "#18181b",
-                }}
-            >
-                <Code size={40} color="#475569" />
-                <p style={{ margin: 0, fontSize: "0.95rem", fontWeight: 600 }}>
-                    No source files generated yet
-                </p>
+            <div className="h-full flex flex-col items-center justify-center p-6 bg-[#c0c0c0] text-black">
+                <div className="win-window max-w-sm w-full p-4 text-center">
+                    <div className="text-2xl mb-2">📄</div>
+                    <h3 className="font-bold text-sm uppercase mb-1">No source files generated</h3>
+                    <p className="font-mono text-xs text-[#808080]">
+                        Ask the AI to build your website to generate index.html, style.css, and script.js files.
+                    </p>
+                </div>
             </div>
         );
     }
 
     return (
-        <div
-            style={{
-                height: "100%",
-                display: "flex",
-                background: "#18181b",
-                color: "#e2e8f0",
-                overflow: "hidden",
-                fontFamily: "system-ui, -apple-system, sans-serif",
-            }}
-        >
-            {/* ── Left: File Explorer ──────────────────────────── */}
-            <div
-                style={{
-                    width: "240px",
-                    minWidth: "200px",
-                    maxWidth: "280px",
-                    background: "#141416",
-                    borderRight: "1px solid #27272a",
-                    display: "flex",
-                    flexDirection: "column",
-                    userSelect: "none",
-                }}
-            >
+        <div className="h-full flex flex-col md:flex-row bg-[#c0c0c0] text-black overflow-hidden font-sans border-2 border-t-0 border-[#808080]">
+            {/* ── Left: Retro File Explorer ─────────────────────── */}
+            <div className="w-full md:w-56 flex-shrink-0 bg-[#c0c0c0] border-b md:border-b-0 md:border-r-2 border-[#808080] flex flex-col">
                 {/* Explorer Header */}
-                <div
-                    style={{
-                        padding: "0.75rem 0.9rem",
-                        borderBottom: "1px solid #27272a",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "space-between",
-                    }}
-                >
-                    <div style={{ display: "flex", alignItems: "center", gap: "0.4rem" }}>
-                        <FolderOpen size={15} color="#8b5cf6" />
-                        <span
-                            style={{
-                                fontSize: "0.72rem",
-                                fontWeight: 800,
-                                letterSpacing: "0.06em",
-                                textTransform: "uppercase",
-                                color: "#cbd5e1",
-                            }}
-                        >
-                            Explorer ({filePaths.length})
+                <div className="win-titlebar bg-gradient-to-r from-[#000080] to-[#1084d0] py-1 px-2">
+                    <div className="flex items-center gap-1.5 text-xs">
+                        <FolderOpen size={13} color="#ffff00" />
+                        <span className="font-bold uppercase tracking-wider text-white text-[11px]">
+                            Files ({filePaths.length})
                         </span>
                     </div>
                 </div>
 
-                {/* Search in Files */}
-                <div style={{ padding: "0.5rem 0.75rem", borderBottom: "1px solid #27272a" }}>
-                    <div
-                        style={{
-                            display: "flex",
-                            alignItems: "center",
-                            gap: "0.4rem",
-                            background: "#27272a",
-                            padding: "0.3rem 0.5rem",
-                            borderRadius: "6px",
-                            border: "1px solid #3f3f46",
-                        }}
-                    >
-                        <Search size={13} color="#94a3b8" />
+                {/* Filter Search Input */}
+                <div className="p-2 border-b border-[#808080]">
+                    <div className="bevel-inset flex items-center gap-1 px-1.5 py-0.5 bg-white">
+                        <Search size={11} color="#808080" />
                         <input
                             type="text"
                             value={searchQuery}
                             onChange={(e) => setSearchQuery(e.target.value)}
-                            placeholder="Filter files..."
-                            style={{
-                                background: "transparent",
-                                border: "none",
-                                outline: "none",
-                                color: "white",
-                                fontSize: "0.75rem",
-                                width: "100%",
-                            }}
+                            placeholder="Filter (*.html, *.css)..."
+                            className="w-full border-none outline-none font-mono text-[11px] text-black bg-transparent"
                         />
                         {searchQuery && (
                             <button
                                 onClick={() => setSearchQuery("")}
-                                style={{
-                                    background: "transparent",
-                                    border: "none",
-                                    color: "#94a3b8",
-                                    cursor: "pointer",
-                                    padding: 0,
-                                }}
+                                className="text-[#808080] hover:text-black"
                             >
-                                <X size={12} />
+                                <X size={11} />
                             </button>
                         )}
                     </div>
                 </div>
 
                 {/* File List */}
-                <div
-                    style={{
-                        flex: 1,
-                        overflowY: "auto",
-                        padding: "0.4rem 0.35rem",
-                        display: "flex",
-                        flexDirection: "column",
-                        gap: "2px",
-                    }}
-                >
+                <div className="flex-1 overflow-y-auto p-1.5 flex flex-col gap-1 bg-white bevel-inset m-1">
                     {filteredFiles.map((path) => {
                         const isSelected = path === selectedPath;
                         const meta = getFileMeta(path);
-                        const Icon = meta.icon;
                         const fileName = path.split("/").pop() || path;
-                        const dirPath = path.includes("/")
-                            ? path.substring(0, path.lastIndexOf("/"))
-                            : "";
 
                         return (
                             <button
                                 key={path}
                                 onClick={() => handleSelectFile(path)}
-                                style={{
-                                    display: "flex",
-                                    alignItems: "center",
-                                    gap: "0.5rem",
-                                    padding: "0.4rem 0.6rem",
-                                    borderRadius: "6px",
-                                    background: isSelected ? "#27272a" : "transparent",
-                                    color: isSelected ? "white" : "#a1a1aa",
-                                    border: "none",
-                                    textAlign: "left",
-                                    cursor: "pointer",
-                                    transition: "all 0.15s ease",
-                                    fontSize: "0.8rem",
-                                    width: "100%",
-                                }}
-                                onMouseEnter={(e) => {
-                                    if (!isSelected) {
-                                        e.currentTarget.style.background = "#1f1f23";
-                                        e.currentTarget.style.color = "#e4e4e7";
-                                    }
-                                }}
-                                onMouseLeave={(e) => {
-                                    if (!isSelected) {
-                                        e.currentTarget.style.background = "transparent";
-                                        e.currentTarget.style.color = "#a1a1aa";
-                                    }
-                                }}
+                                className={`flex items-center gap-1.5 px-2 py-1 text-left text-xs font-mono w-full cursor-pointer transition-none border ${
+                                    isSelected
+                                        ? "bg-[#000080] text-white border-black"
+                                        : "bg-transparent text-black border-transparent hover:bg-[#e8e8e8]"
+                                }`}
                             >
-                                <Icon size={14} color={meta.color} style={{ flexShrink: 0 }} />
-                                <div style={{ flex: 1, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
-                                    <span style={{ fontWeight: isSelected ? 600 : 400 }}>
-                                        {fileName}
-                                    </span>
-                                    {dirPath && (
-                                        <span style={{ fontSize: "0.68rem", color: "#71717a", marginLeft: "0.35rem" }}>
-                                            {dirPath}
-                                        </span>
-                                    )}
-                                </div>
+                                <span className={`font-black text-[10px] ${isSelected ? "text-[#ffff00]" : "text-[#000080]"}`}>
+                                    {meta.tag}
+                                </span>
+                                <span className="truncate flex-1 font-bold">
+                                    {fileName}
+                                </span>
                             </button>
                         );
                     })}
 
                     {filteredFiles.length === 0 && (
-                        <p style={{ fontSize: "0.75rem", color: "#71717a", textAlign: "center", padding: "1rem" }}>
-                            No files match "{searchQuery}"
+                        <p className="text-[11px] font-mono text-[#808080] text-center p-3">
+                            No files match &quot;{searchQuery}&quot;
                         </p>
                     )}
                 </div>
             </div>
 
-            {/* ── Right: Editor Area ───────────────────────────── */}
-            <div
-                style={{
-                    flex: 1,
-                    display: "flex",
-                    flexDirection: "column",
-                    overflow: "hidden",
-                    background: "#1e1e1e",
-                }}
-            >
-                {/* Tab Bar */}
-                <div
-                    style={{
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "space-between",
-                        background: "#141416",
-                        borderBottom: "1px solid #27272a",
-                        overflowX: "auto",
-                        minHeight: "36px",
-                    }}
-                >
-                    <div style={{ display: "flex", alignItems: "center", overflowX: "auto" }}>
+            {/* ── Right: Retro Code Editor Area ─────────────────── */}
+            <div className="flex-1 flex flex-col overflow-hidden bg-[#c0c0c0]">
+                {/* 90s Tab Bar */}
+                <div className="flex items-center justify-between bg-[#c0c0c0] border-b-2 border-[#808080] px-1 pt-1 overflow-x-auto min-h-[32px]">
+                    <div className="flex items-center gap-1 overflow-x-auto">
                         {openTabs.map((path) => {
                             const isSelected = path === selectedPath;
                             const meta = getFileMeta(path);
-                            const Icon = meta.icon;
                             const fileName = path.split("/").pop() || path;
 
                             return (
                                 <div
                                     key={path}
                                     onClick={() => setSelectedPath(path)}
-                                    style={{
-                                        display: "flex",
-                                        alignItems: "center",
-                                        gap: "0.45rem",
-                                        padding: "0.45rem 0.85rem",
-                                        background: isSelected ? "#1e1e1e" : "#18181b",
-                                        color: isSelected ? "white" : "#a1a1aa",
-                                        borderRight: "1px solid #27272a",
-                                        borderTop: isSelected ? "2px solid var(--accent)" : "2px solid transparent",
-                                        fontSize: "0.78rem",
-                                        fontWeight: isSelected ? 600 : 400,
-                                        cursor: "pointer",
-                                        userSelect: "none",
-                                        whiteSpace: "nowrap",
-                                        transition: "background 0.15s ease",
-                                    }}
+                                    className={`flex items-center gap-1.5 px-2.5 py-1 text-xs font-mono cursor-pointer user-select-none whitespace-nowrap border-2 ${
+                                        isSelected
+                                            ? "bg-[#ffffff] text-black border-b-0 border-[#808080] -mb-[2px] font-bold z-10"
+                                            : "bg-[#c0c0c0] text-[#404040] border-[#ffffff_#808080_#808080_#ffffff]"
+                                    }`}
                                 >
-                                    <Icon size={13} color={meta.color} />
+                                    <span className="font-bold text-[10px] text-[#000080]">
+                                        {meta.tag}
+                                    </span>
                                     <span>{fileName}</span>
                                     <button
                                         onClick={(e) => handleCloseTab(e, path)}
-                                        style={{
-                                            background: "transparent",
-                                            border: "none",
-                                            color: "#71717a",
-                                            cursor: "pointer",
-                                            padding: "2px",
-                                            display: "flex",
-                                            alignItems: "center",
-                                            borderRadius: "3px",
-                                        }}
-                                        onMouseEnter={(e) => (e.currentTarget.style.color = "white")}
-                                        onMouseLeave={(e) => (e.currentTarget.style.color = "#71717a")}
+                                        className="hover:bg-[#ff0000] hover:text-white p-0.5 ml-1 text-xs leading-none"
+                                        title="Close tab"
                                     >
-                                        <X size={12} />
+                                        ×
                                     </button>
                                 </div>
                             );
                         })}
                     </div>
 
-                    {/* Actions on active file */}
-                    <div style={{ display: "flex", alignItems: "center", gap: "0.4rem", padding: "0 0.6rem" }}>
+                    {/* Actions on Active File */}
+                    <div className="flex items-center gap-1.5 pb-1 px-1 flex-shrink-0">
                         <button
                             type="button"
                             onClick={handleCopy}
-                            title="Copy file contents"
-                            style={{
-                                display: "inline-flex",
-                                alignItems: "center",
-                                gap: "0.3rem",
-                                padding: "0.25rem 0.55rem",
-                                background: copied ? "#059669" : "#27272a",
-                                color: "white",
-                                border: "1px solid #3f3f46",
-                                borderRadius: "6px",
-                                fontSize: "0.72rem",
-                                fontWeight: 600,
-                                cursor: "pointer",
-                                transition: "all 0.15s ease",
-                            }}
+                            title="Copy file code to clipboard"
+                            className="btn-win95 text-[11px] py-0.5 px-2 flex items-center gap-1"
                         >
-                            {copied ? <Check size={12} /> : <Copy size={12} />}
-                            <span>{copied ? "Copied" : "Copy"}</span>
+                            {copied ? <Check size={11} color="#00aa00" /> : <Copy size={11} />}
+                            <span>{copied ? "COPIED" : "COPY"}</span>
                         </button>
 
                         <button
                             type="button"
                             onClick={handleDownload}
                             title="Download file"
-                            style={{
-                                display: "inline-flex",
-                                alignItems: "center",
-                                gap: "0.3rem",
-                                padding: "0.25rem 0.55rem",
-                                background: "#27272a",
-                                color: "white",
-                                border: "1px solid #3f3f46",
-                                borderRadius: "6px",
-                                fontSize: "0.72rem",
-                                fontWeight: 600,
-                                cursor: "pointer",
-                                transition: "all 0.15s ease",
-                            }}
+                            className="btn-win95 text-[11px] py-0.5 px-2 flex items-center gap-1"
                         >
-                            <Download size={12} />
+                            <Download size={11} />
+                            <span>DOWNLOAD</span>
                         </button>
                     </div>
                 </div>
 
                 {/* Path Breadcrumb Bar */}
-                <div
-                    style={{
-                        padding: "0.3rem 0.9rem",
-                        background: "#18181b",
-                        borderBottom: "1px solid #27272a",
-                        display: "flex",
-                        alignItems: "center",
-                        gap: "0.35rem",
-                        fontSize: "0.72rem",
-                        color: "#71717a",
-                        fontFamily: "monospace",
-                    }}
-                >
-                    <span style={{ color: "#a1a1aa" }}>craftly</span>
+                <div className="px-2 py-0.5 bg-[#e8e8e8] border-b border-[#808080] flex items-center gap-1 text-[11px] font-mono text-black">
+                    <span className="text-[#808080]">C:\craftly_project\</span>
                     {selectedPath.split("/").map((segment, i, arr) => (
                         <React.Fragment key={i}>
-                            <ChevronRight size={11} color="#52525b" />
-                            <span style={{ color: i === arr.length - 1 ? "#e4e4e7" : "#a1a1aa", fontWeight: i === arr.length - 1 ? 600 : 400 }}>
+                            <ChevronRight size={10} color="#808080" />
+                            <span className={i === arr.length - 1 ? "font-bold text-[#000080]" : "text-black"}>
                                 {segment}
                             </span>
                         </React.Fragment>
                     ))}
                 </div>
 
-                {/* Code Viewer */}
-                <div
-                    style={{
-                        flex: 1,
-                        overflow: "auto",
-                        background: "#1e1e1e",
-                        position: "relative",
-                    }}
-                >
+                {/* Code Content */}
+                <div className="flex-1 overflow-auto bg-[#1e1e1e] bevel-inset m-1">
                     <SyntaxHighlighter
                         language={activeMeta.language}
                         style={vscDarkPlus}
                         customStyle={{
                             margin: 0,
-                            padding: "1rem",
+                            padding: "0.75rem",
                             background: "#1e1e1e",
-                            fontFamily: "JetBrains Mono, Fira Code, Menlo, monospace",
-                            fontSize: "0.85rem",
-                            lineHeight: 1.6,
+                            fontFamily: "Courier New, monospace",
+                            fontSize: "0.82rem",
+                            lineHeight: 1.5,
                             minHeight: "100%",
                         }}
                         showLineNumbers={true}
                         lineNumberStyle={{
-                            minWidth: "2.8em",
-                            paddingRight: "1em",
+                            minWidth: "2.5em",
+                            paddingRight: "0.8em",
                             color: "#52525b",
                             fontSize: "0.78rem",
                             userSelect: "none",
@@ -540,29 +340,22 @@ export function CodeEditorView({ files }: CodeEditorViewProps) {
                     </SyntaxHighlighter>
                 </div>
 
-                {/* Status Bar */}
-                <div
-                    style={{
-                        padding: "0.25rem 0.9rem",
-                        background: "#09090b",
-                        borderTop: "1px solid #27272a",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "space-between",
-                        fontSize: "0.68rem",
-                        color: "#71717a",
-                        fontFamily: "monospace",
-                    }}
-                >
-                    <div style={{ display: "flex", alignItems: "center", gap: "0.9rem" }}>
-                        <span>Lines: <strong style={{ color: "#d4d4d8" }}>{lineCount}</strong></span>
-                        <span>Chars: <strong style={{ color: "#d4d4d8" }}>{charCount}</strong></span>
+                {/* Windows 95 Status Bar */}
+                <div className="px-2 py-0.5 bg-[#c0c0c0] border-t border-[#808080] flex items-center justify-between text-[11px] font-mono text-black">
+                    <div className="flex items-center gap-3">
+                        <span className="bevel-inset px-1.5 py-0.2 bg-[#c0c0c0]">
+                            Lines: <strong>{lineCount}</strong>
+                        </span>
+                        <span className="bevel-inset px-1.5 py-0.2 bg-[#c0c0c0]">
+                            Chars: <strong>{charCount}</strong>
+                        </span>
                     </div>
 
-                    <div style={{ display: "flex", alignItems: "center", gap: "0.9rem" }}>
-                        <span>UTF-8</span>
-                        <span>Spaces: 2</span>
-                        <span style={{ color: activeMeta.color, fontWeight: 600 }}>{activeMeta.label}</span>
+                    <div className="flex items-center gap-2">
+                        <span className="bevel-inset px-1.5 py-0.2 bg-[#c0c0c0]">UTF-8</span>
+                        <span className="bevel-inset px-1.5 py-0.2 bg-[#c0c0c0] text-[#000080] font-bold">
+                            {activeMeta.label}
+                        </span>
                     </div>
                 </div>
             </div>

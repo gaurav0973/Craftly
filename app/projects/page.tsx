@@ -9,14 +9,32 @@ function formatDate(date: string | Date) {
         month: "short",
         day: "numeric",
         year: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
     }).format(new Date(date));
 }
 
-const CARD_ACCENT_COLORS = [
-    "var(--accent)",
-    "var(--secondary)",
-    "var(--tertiary)",
-    "var(--quaternary)",
+const PRESET_IDEAS = [
+    {
+        icon: "🕹️",
+        label: "2D Canvas Game",
+        prompt: "Build an arcade 2D Snake or Pong game with HTML5 canvas, keyboard controls, high score tracking in localStorage, and retro pixel art styling.",
+    },
+    {
+        icon: "📋",
+        label: "Interactive Todo App",
+        prompt: "Create a modern Todo and Task Manager web app using pure HTML, CSS, and JS with drag-and-drop, category filters, dark mode toggle, and localStorage.",
+    },
+    {
+        icon: "🛍️",
+        label: "E-Commerce Catalog",
+        prompt: "Build a responsive product store catalog with search, price filtering, product detail modals, and an interactive shopping cart with local checkout.",
+    },
+    {
+        icon: "🎨",
+        label: "GeoCities Portfolio",
+        prompt: "Create an authentic 90s personal webmaster portfolio with beveled windows, animated marquee ticker, hit counter, sound effects, and guestbook form.",
+    },
 ];
 
 export default function ProjectsPage() {
@@ -44,402 +62,195 @@ export default function ProjectsPage() {
     };
 
     return (
-        <div style={{ flex: 1, display: "flex", flexDirection: "column" }}>
-            {/* ── Chatbox Hero ────────────────────────────────────── */}
-            <section
-                style={{
-                    background: "var(--foreground)",
-                    padding: "3rem 1.5rem",
-                    position: "relative",
-                    overflow: "hidden",
-                }}
-            >
-                {/* Decorations */}
-                <div
-                    style={{
-                        position: "absolute",
-                        top: "-60px",
-                        right: "-60px",
-                        width: "200px",
-                        height: "200px",
-                        borderRadius: "50%",
-                        background: "var(--accent)",
-                        opacity: 0.12,
-                        pointerEvents: "none",
-                    }}
-                />
-                <div
-                    style={{
-                        position: "absolute",
-                        bottom: "-40px",
-                        left: "-40px",
-                        width: "160px",
-                        height: "160px",
-                        borderRadius: "var(--radius-lg)",
-                        background: "var(--tertiary)",
-                        opacity: 0.1,
-                        transform: "rotate(15deg)",
-                        pointerEvents: "none",
-                    }}
-                />
+        <div className="flex-1 max-w-5xl w-full mx-auto px-3 py-4 flex flex-col gap-6">
+            {/* ── Prompt Console Window ────────────────────────────── */}
+            <section className="win-window">
+                {/* Title bar */}
+                <div className="win-titlebar">
+                    <div className="flex items-center gap-2">
+                        <span>⌨️ C:\PROGRAMS\CRAFTLY\NEW_PROJECT_WIZARD.EXE</span>
+                        <span className="badge-new">PURE HTML/CSS/JS</span>
+                    </div>
+                    <div className="flex items-center">
+                        <span className="win-btn-control">_</span>
+                        <span className="win-btn-control">□</span>
+                        <span className="win-btn-control">✕</span>
+                    </div>
+                </div>
 
-                <div
-                    style={{
-                        maxWidth: "760px",
-                        margin: "0 auto",
-                        position: "relative",
-                        zIndex: 1,
-                    }}
-                >
-                    <div style={{ textAlign: "center", marginBottom: "1.75rem" }}>
-                        <h1
-                            style={{
-                                fontFamily: "var(--font-outfit), Outfit, sans-serif",
-                                fontSize: "clamp(1.6rem, 4vw, 2.2rem)",
-                                fontWeight: 800,
-                                color: "white",
-                                marginBottom: "0.5rem",
-                            }}
-                        >
-                            What do you want to{" "}
-                            <span style={{ color: "var(--tertiary)" }}>build</span> today?
-                        </h1>
-                        <p style={{ fontSize: "0.95rem", color: "#94a3b8" }}>
-                            Describe your app idea and Craftly will build it for you.
-                        </p>
+                <div className="p-4 bg-[#c0c0c0]">
+                    <div className="flex items-center justify-between mb-2">
+                        <div>
+                            <h1 className="text-xl sm:text-2xl font-black uppercase text-black">
+                                What website do you want to craft?
+                            </h1>
+                            <p className="text-xs font-mono text-[#808080]">
+                                Describe your layout & functionality. Craftly will generate clean HTML, CSS & JS.
+                            </p>
+                        </div>
+                        <span className="badge-hot hidden sm:inline-flex">⚡ ZERO FRAMEWORKS</span>
                     </div>
 
                     <form onSubmit={handleSubmit}>
-                        <div
-                            style={{
-                                background: "white",
-                                border: "2px solid var(--foreground)",
-                                borderRadius: "var(--radius-lg)",
-                                boxShadow: "var(--shadow-pop-hover)",
-                                overflow: "hidden",
-                            }}
-                        >
+                        <div className="bevel-inset p-2 bg-white mb-3">
                             <textarea
                                 id="project-prompt"
                                 value={prompt}
                                 onChange={(e) => setPrompt(e.target.value)}
                                 onKeyDown={handleKeyDown}
-                                placeholder="e.g. Build me a todo app with dark mode, drag-to-reorder, and local storage persistence..."
+                                placeholder="e.g. Build an authentic retro 90s personal website with a hit counter, marquee announcements, beveled cards, and a working contact guestbook..."
                                 rows={4}
-                                style={{
-                                    width: "100%",
-                                    border: "none",
-                                    outline: "none",
-                                    padding: "1.25rem 1.25rem 0.75rem",
-                                    fontFamily: "var(--font-plus-jakarta), Plus Jakarta Sans, sans-serif",
-                                    fontSize: "0.95rem",
-                                    color: "var(--foreground)",
-                                    resize: "none",
-                                    background: "transparent",
-                                }}
+                                className="w-full border-none outline-none font-mono text-sm text-black bg-transparent resize-none leading-relaxed p-1"
                             />
-
-                            <div
-                                style={{
-                                    display: "flex",
-                                    alignItems: "center",
-                                    justifyContent: "space-between",
-                                    padding: "0.75rem 1.25rem",
-                                    borderTop: "1px solid var(--border)",
-                                    background: "var(--muted)",
-                                }}
-                            >
-                                <span style={{ fontSize: "0.75rem", color: "var(--muted-foreground)" }}>
-                                    ⌘ + Enter to send
-                                </span>
-
-                                <button
-                                    id="create-project-btn"
-                                    type="submit"
-                                    disabled={!prompt.trim() || createProject.isPending}
-                                    className="btn-primary"
-                                    style={{ fontSize: "0.9rem", padding: "0.55rem 1.2rem" }}
-                                >
-                                    {createProject.isPending ? (
-                                        <>
-                                            <span
-                                                style={{
-                                                    display: "inline-block",
-                                                    width: "14px",
-                                                    height: "14px",
-                                                    border: "2px solid rgba(255,255,255,0.4)",
-                                                    borderTopColor: "white",
-                                                    borderRadius: "50%",
-                                                    animation: "spin-slow 0.8s linear infinite",
-                                                }}
-                                            />
-                                            Building...
-                                        </>
-                                    ) : (
-                                        <>
-                                            Build It
-                                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                                                <path d="M5 12h14M12 5l7 7-7 7" />
-                                            </svg>
-                                        </>
-                                    )}
-                                </button>
+                            <div className="flex items-center justify-between pt-2 border-t border-[#808080] text-xs font-mono text-[#808080]">
+                                <span>Tip: Press [Ctrl + Enter] or [⌘ + Enter] to compile</span>
+                                <span className="font-bold text-black">{prompt.length} chars</span>
                             </div>
                         </div>
 
-                        {/* Suggestion pills */}
-                        <div
-                            style={{
-                                display: "flex",
-                                gap: "0.5rem",
-                                flexWrap: "wrap",
-                                marginTop: "0.75rem",
-                                justifyContent: "center",
-                            }}
-                        >
-                            {[
-                                "📋 Todo app",
-                                "🛒 E-commerce store",
-                                "📊 Dashboard with charts",
-                                "🎮 Browser game",
-                            ].map((suggestion) => (
-                                <button
-                                    key={suggestion}
-                                    type="button"
-                                    onClick={() => setPrompt(suggestion.replace(/^[^\s]+ /, ""))}
-                                    style={{
-                                        background: "rgba(255,255,255,0.1)",
-                                        border: "1px solid rgba(255,255,255,0.2)",
-                                        color: "#cbd5e1",
-                                        padding: "0.3rem 0.8rem",
-                                        borderRadius: "var(--radius-full)",
-                                        fontSize: "0.75rem",
-                                        cursor: "pointer",
-                                        fontFamily: "var(--font-plus-jakarta), Plus Jakarta Sans, sans-serif",
-                                        transition: "all 0.2s",
-                                    }}
-                                    onMouseEnter={(e) => {
-                                        (e.target as HTMLButtonElement).style.background = "rgba(255,255,255,0.2)";
-                                        (e.target as HTMLButtonElement).style.color = "white";
-                                    }}
-                                    onMouseLeave={(e) => {
-                                        (e.target as HTMLButtonElement).style.background = "rgba(255,255,255,0.1)";
-                                        (e.target as HTMLButtonElement).style.color = "#cbd5e1";
-                                    }}
-                                >
-                                    {suggestion}
-                                </button>
-                            ))}
+                        {/* Presets & Actions */}
+                        <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
+                            {/* Preset Buttons */}
+                            <div className="flex flex-wrap items-center gap-1.5">
+                                <span className="text-[11px] font-mono text-black font-bold mr-1">PRESETS:</span>
+                                {PRESET_IDEAS.map((preset, idx) => (
+                                    <button
+                                        key={idx}
+                                        type="button"
+                                        onClick={() => setPrompt(preset.prompt)}
+                                        className="btn-win95 text-[11px] py-1 px-2 font-mono flex items-center gap-1"
+                                    >
+                                        <span>{preset.icon}</span>
+                                        <span>{preset.label}</span>
+                                    </button>
+                                ))}
+                            </div>
+
+                            {/* Submit Button */}
+                            <button
+                                id="create-project-btn"
+                                type="submit"
+                                disabled={!prompt.trim() || createProject.isPending}
+                                className="btn-win95 btn-win95-primary text-xs sm:text-sm py-2 px-5 font-bold flex items-center justify-center gap-2"
+                            >
+                                {createProject.isPending ? (
+                                    <>
+                                        <span className="animate-pulse">⏳</span>
+                                        <span>COMPILING HTML...</span>
+                                    </>
+                                ) : (
+                                    <>
+                                        <span>⚡ CRAFT WEBSITE NOW</span>
+                                        <span>→</span>
+                                    </>
+                                )}
+                            </button>
                         </div>
                     </form>
                 </div>
             </section>
 
-            {/* ── Projects Grid ────────────────────────────────────── */}
-            <section
-                style={{
-                    flex: 1,
-                    maxWidth: "1200px",
-                    width: "100%",
-                    margin: "0 auto",
-                    padding: "2.5rem 1.5rem",
-                }}
-            >
-                <div
-                    style={{
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "space-between",
-                        marginBottom: "1.5rem",
-                    }}
-                >
-                    <h2
-                        style={{
-                            fontFamily: "var(--font-outfit), Outfit, sans-serif",
-                            fontSize: "1.3rem",
-                            fontWeight: 700,
-                            color: "var(--foreground)",
-                        }}
-                    >
-                        Your Projects
-                        {projects && !("error" in projects) && projects.length > 0 && (
-                            <span
-                                style={{
-                                    marginLeft: "0.6rem",
-                                    background: "var(--accent)",
-                                    color: "white",
-                                    fontSize: "0.75rem",
-                                    fontWeight: 700,
-                                    padding: "0.15rem 0.55rem",
-                                    borderRadius: "var(--radius-full)",
-                                    border: "1.5px solid var(--foreground)",
-                                    verticalAlign: "middle",
-                                }}
-                            >
-                                {projects.length}
+            {/* ── Projects Directory (File Explorer Table) ──────────── */}
+            <section className="win-window">
+                <div className="win-titlebar">
+                    <div className="flex items-center gap-2">
+                        <span>📁 C:\MY_WEBSITES\</span>
+                        {projects && !("error" in projects) && Array.isArray(projects) && (
+                            <span className="badge-retro font-mono text-[10px]">
+                                {projects.length} FILE{projects.length === 1 ? "" : "S"} FOUND
                             </span>
                         )}
-                    </h2>
+                    </div>
+                    <div className="flex items-center">
+                        <span className="win-btn-control">_</span>
+                        <span className="win-btn-control">□</span>
+                        <span className="win-btn-control">✕</span>
+                    </div>
                 </div>
 
-                {/* Loading */}
-                {projectsLoading && (
-                    <div
-                        style={{
-                            display: "grid",
-                            gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))",
-                            gap: "1.25rem",
-                        }}
-                    >
-                        {[...Array(3)].map((_, i) => (
-                            <div
-                                key={i}
-                                style={{
-                                    height: "160px",
-                                    background: "var(--muted)",
-                                    border: "2px solid var(--border)",
-                                    borderRadius: "var(--radius-md)",
-                                    animation: "pulse-glow 1.5s ease infinite",
-                                }}
-                            />
-                        ))}
-                    </div>
-                )}
-
-                {/* Empty state */}
-                {!projectsLoading && (!projects || ("error" in projects) || (Array.isArray(projects) && projects.length === 0)) && (
-                    <div
-                        style={{
-                            display: "flex",
-                            flexDirection: "column",
-                            alignItems: "center",
-                            justifyContent: "center",
-                            padding: "5rem 2rem",
-                            textAlign: "center",
-                        }}
-                    >
-                        <div
-                            style={{
-                                width: "80px",
-                                height: "80px",
-                                borderRadius: "50%",
-                                background: "var(--muted)",
-                                border: "2px solid var(--border)",
-                                display: "flex",
-                                alignItems: "center",
-                                justifyContent: "center",
-                                fontSize: "2rem",
-                                marginBottom: "1rem",
-                                boxShadow: "var(--shadow-card)",
-                            }}
-                        >
-                            🚀
+                <div className="p-4 bg-[#c0c0c0]">
+                    {/* Header Info */}
+                    <div className="flex items-center justify-between mb-3">
+                        <div className="text-xs font-mono text-black">
+                            <span>Directory Listing of Generated Pure HTML/CSS/JS Websites</span>
                         </div>
-                        <h3
-                            style={{
-                                fontFamily: "var(--font-outfit), Outfit, sans-serif",
-                                fontWeight: 700,
-                                fontSize: "1.2rem",
-                                color: "var(--foreground)",
-                                marginBottom: "0.5rem",
-                            }}
-                        >
-                            No projects yet
-                        </h3>
-                        <p style={{ fontSize: "0.9rem", color: "var(--muted-foreground)", maxWidth: "340px" }}>
-                            Describe your first app idea above and Craftly will build it for you in seconds.
-                        </p>
+                        <span className="text-xs font-mono text-[#808080]">File Type: Web Application</span>
                     </div>
-                )}
 
-                {/* Projects grid */}
-                {!projectsLoading && projects && !("error" in projects) && Array.isArray(projects) && projects.length > 0 && (
-                    <div
-                        style={{
-                            display: "grid",
-                            gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))",
-                            gap: "1.25rem",
-                        }}
-                    >
-                        {projects.map((project, i) => {
-                            const accentColor = CARD_ACCENT_COLORS[i % CARD_ACCENT_COLORS.length];
-                            return (
-                                <div
-                                    key={project.id}
-                                    className="card-sticker animate-wiggle"
-                                    style={{ padding: "1.25rem", position: "relative", overflow: "hidden" }}
-                                >
-                                    {/* Color stripe top */}
-                                    <div
-                                        style={{
-                                            position: "absolute",
-                                            top: 0,
-                                            left: 0,
-                                            right: 0,
-                                            height: "4px",
-                                            background: accentColor,
-                                        }}
-                                    />
+                    {/* Loading State */}
+                    {projectsLoading && (
+                        <div className="bevel-inset p-8 bg-white text-center">
+                            <div className="text-2xl mb-2 animate-bounce">⏳</div>
+                            <p className="font-mono text-xs text-black font-bold">Scanning C:\MY_WEBSITES\ directory...</p>
+                        </div>
+                    )}
 
-                                    {/* Icon */}
-                                    <div
-                                        style={{
-                                            width: "44px",
-                                            height: "44px",
-                                            borderRadius: "var(--radius-sm)",
-                                            background: accentColor + "22",
-                                            border: `2px solid ${accentColor}`,
-                                            display: "flex",
-                                            alignItems: "center",
-                                            justifyContent: "center",
-                                            marginBottom: "0.85rem",
-                                            marginTop: "0.5rem",
-                                        }}
-                                    >
-                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke={accentColor} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                                            <polyline points="16 18 22 12 16 6" />
-                                            <polyline points="8 6 2 12 8 18" />
-                                        </svg>
-                                    </div>
+                    {/* Empty State */}
+                    {!projectsLoading && (!projects || ("error" in projects) || (Array.isArray(projects) && projects.length === 0)) && (
+                        <div className="bevel-inset p-8 bg-white text-center">
+                            <div className="text-3xl mb-2">📁</div>
+                            <h3 className="font-bold text-sm text-black mb-1 uppercase">Directory is empty (0 files)</h3>
+                            <p className="text-xs font-mono text-[#808080] max-w-sm mx-auto mb-4">
+                                You haven&apos;t crafted any HTML/CSS/JS websites yet. Enter a prompt in the console wizard above to build your first website.
+                            </p>
+                            <button
+                                type="button"
+                                onClick={() => setPrompt(PRESET_IDEAS[0].prompt)}
+                                className="btn-win95 text-xs py-1 px-3 font-bold"
+                            >
+                                🕹️ Try &quot;2D Canvas Game&quot; Preset
+                            </button>
+                        </div>
+                    )}
 
-                                    <h3
-                                        style={{
-                                            fontFamily: "var(--font-outfit), Outfit, sans-serif",
-                                            fontWeight: 700,
-                                            fontSize: "1rem",
-                                            color: "var(--foreground)",
-                                            marginBottom: "0.35rem",
-                                            overflow: "hidden",
-                                            textOverflow: "ellipsis",
-                                            whiteSpace: "nowrap",
-                                        }}
-                                    >
-                                        {project.name}
-                                    </h3>
-
-                                    <p style={{ fontSize: "0.75rem", color: "var(--muted-foreground)", marginBottom: "1rem" }}>
-                                        {formatDate(project.createdAt)}
-                                    </p>
-
-                                    <a
-                                        href={`/projects/${project.id}`}
-                                        id={`open-project-${project.id}`}
-                                        className="btn-primary"
-                                        style={{
-                                            fontSize: "0.8rem",
-                                            padding: "0.45rem 1rem",
-                                            background: accentColor,
-                                            width: "100%",
-                                            justifyContent: "center",
-                                        }}
-                                    >
-                                        Open Project →
-                                    </a>
-                                </div>
-                            );
-                        })}
-                    </div>
-                )}
+                    {/* Project Table Grid */}
+                    {!projectsLoading && projects && !("error" in projects) && Array.isArray(projects) && projects.length > 0 && (
+                        <div className="overflow-x-auto bevel-inset">
+                            <table className="table-retro">
+                                <thead>
+                                    <tr>
+                                        <th style={{ width: "40%" }}>Website Project</th>
+                                        <th style={{ width: "25%" }}>Date Created</th>
+                                        <th style={{ width: "15%" }}>Type</th>
+                                        <th style={{ width: "20%", textAlign: "center" }}>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {projects.map((project) => (
+                                        <tr key={project.id}>
+                                            <td className="font-bold">
+                                                <div className="flex items-center gap-2">
+                                                    <span className="text-base">📄</span>
+                                                    <span className="truncate max-w-[280px]" title={project.name}>
+                                                        {project.name}
+                                                    </span>
+                                                </div>
+                                            </td>
+                                            <td className="font-mono text-xs text-[#000000]">
+                                                {formatDate(project.createdAt)}
+                                            </td>
+                                            <td>
+                                                <span className="text-[10px] font-mono bg-[#000080] text-white px-1.5 py-0.5 border border-black font-bold">
+                                                    HTML/CSS/JS
+                                                </span>
+                                            </td>
+                                            <td className="text-center">
+                                                <a
+                                                    href={`/projects/${project.id}`}
+                                                    id={`open-project-${project.id}`}
+                                                    className="btn-win95 btn-win95-primary text-[11px] py-0.5 px-2 font-bold inline-flex items-center gap-1"
+                                                >
+                                                    <span>Open Studio</span>
+                                                    <span>→</span>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
+                    )}
+                </div>
             </section>
         </div>
     );

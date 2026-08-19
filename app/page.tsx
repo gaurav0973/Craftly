@@ -6,92 +6,78 @@ export default async function HomePage() {
     const { userId } = await auth();
 
     return (
-        <div
-            className="min-h-screen flex flex-col"
-            style={{ background: "var(--background)" }}
-        >
-            {/* ── Navbar ─────────────────────────────────────────────── */}
-            <header
-                style={{
-                    background: "var(--background)",
-                    borderBottom: "2px solid var(--border)",
-                    position: "sticky",
-                    top: 0,
-                    zIndex: 50,
-                }}
-            >
-                <div
-                    style={{
-                        maxWidth: "1100px",
-                        margin: "0 auto",
-                        padding: "0 1.5rem",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "space-between",
-                        height: "4rem",
-                    }}
-                >
-                    {/* Logo */}
-                    <Link
-                        href="/"
-                        style={{
-                            display: "flex",
-                            alignItems: "center",
-                            gap: "0.4rem",
-                            textDecoration: "none",
-                        }}
-                    >
-                        <span
-                            style={{
-                                width: "32px",
-                                height: "32px",
-                                borderRadius: "50%",
-                                background: "var(--accent)",
-                                border: "2px solid var(--foreground)",
-                                display: "flex",
-                                alignItems: "center",
-                                justifyContent: "center",
-                                boxShadow: "2px 2px 0px var(--foreground)",
-                            }}
-                        >
-                            <svg
-                                width="16"
-                                height="16"
-                                viewBox="0 0 24 24"
-                                fill="white"
-                            >
-                                <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
-                            </svg>
-                        </span>
-                        <span
-                            style={{
-                                fontFamily: "var(--font-outfit), Outfit, sans-serif",
-                                fontWeight: 800,
-                                fontSize: "1.3rem",
-                                color: "var(--foreground)",
-                            }}
-                        >
-                            Craft
-                            <span style={{ color: "var(--accent)" }}>ly</span>
-                        </span>
-                    </Link>
+        <div className="min-h-screen flex flex-col bg-90s-tile text-black">
+            {/* ── Top Marquee Announcement Ticker ─────────────────────── */}
+            <div className="marquee-container" aria-label="Announcement Ticker">
+                <div className="marquee-content">
+                    <span className="mx-6">
+                        🚨 <strong style={{ color: "#ffffff" }}>CRAFTLY v1.0 RELEASED:</strong> BACK TO THE BASICS! GENERATE PURE HTML, CSS & JAVASCRIPT WEBSITES WITH AI 🚨
+                    </span>
+                    <span className="mx-6 text-[#00ff00]">
+                        ★ NO NODE_MODULES ★ NO WEBPACK ★ NO BUILD FAILURES ★ 100% CLEAN SOURCE CODE ★
+                    </span>
+                    <span className="mx-6 text-[#ff5555]">
+                        ⚡ INSTANT SANDBOX PREVIEWS • DOWNLOAD RAW .ZIP • RUNS EVERYWHERE ⚡
+                    </span>
+                    <span className="mx-6">
+                        🚨 <strong style={{ color: "#ffffff" }}>CRAFTLY v1.0 RELEASED:</strong> BACK TO THE BASICS! GENERATE PURE HTML, CSS & JAVASCRIPT WEBSITES WITH AI 🚨
+                    </span>
+                    <span className="mx-6 text-[#00ff00]">
+                        ★ NO NODE_MODULES ★ NO WEBPACK ★ NO BUILD FAILURES ★ 100% CLEAN SOURCE CODE ★
+                    </span>
+                    <span className="mx-6 text-[#ff5555]">
+                        ⚡ INSTANT SANDBOX PREVIEWS • DOWNLOAD RAW .ZIP • RUNS EVERYWHERE ⚡
+                    </span>
+                </div>
+            </div>
 
-                    {/* Nav actions */}
-                    <div style={{ display: "flex", gap: "0.75rem", alignItems: "center" }}>
+            {/* ── Windows 95 Navigation Bar ────────────────────────────── */}
+            <header className="bevel-outset sticky top-0 z-50 mx-2 mt-2 bg-[#c0c0c0]">
+                {/* Title Bar */}
+                <div className="win-titlebar">
+                    <div className="flex items-center gap-2">
+                        <span className="inline-block w-3 h-3 bg-[#ffff00] border border-black" />
+                        <span>Craftly_Studio_95.exe - [Internet Webmaster Edition]</span>
+                    </div>
+                    <div className="flex items-center">
+                        <span className="win-btn-control">_</span>
+                        <span className="win-btn-control">□</span>
+                        <span className="win-btn-control text-[#ff0000]">✕</span>
+                    </div>
+                </div>
+
+                {/* Menu Bar */}
+                <div className="flex items-center justify-between px-3 py-1.5 border-b border-[#808080] text-xs">
+                    <div className="flex items-center gap-4">
+                        <Link href="/" className="font-black text-sm tracking-tight text-black no-underline flex items-center gap-1.5">
+                            <span className="bg-[#000080] text-white px-1.5 py-0.5 border border-black font-mono font-bold">C:\&gt;</span>
+                            <span className="font-black text-base">CRAFT<span className="text-[#0000ff]">LY</span></span>
+                        </Link>
+                        <div className="hidden md:flex items-center gap-3 text-black">
+                            <span className="hover:bg-[#000080] hover:text-white px-1.5 py-0.5 cursor-pointer select-none"><u>F</u>ile</span>
+                            <span className="hover:bg-[#000080] hover:text-white px-1.5 py-0.5 cursor-pointer select-none"><u>E</u>dit</span>
+                            <a href="#features" className="hover:bg-[#000080] hover:text-white px-1.5 py-0.5 cursor-pointer select-none no-underline text-black"><u>V</u>iew Features</a>
+                            <a href="#comparison" className="hover:bg-[#000080] hover:text-white px-1.5 py-0.5 cursor-pointer select-none no-underline text-black"><u>C</u>omparison</a>
+                            <a href="#showcase" className="hover:bg-[#000080] hover:text-white px-1.5 py-0.5 cursor-pointer select-none no-underline text-black"><u>T</u>emplates</a>
+                        </div>
+                    </div>
+
+                    {/* Auth Nav Actions */}
+                    <div className="flex items-center gap-2">
                         {userId ? (
                             <>
-                                <Link href="/projects" className="btn-primary" style={{ fontSize: "0.85rem", padding: "0.5rem 1.2rem" }}>
-                                    My Projects →
+                                <Link href="/projects" className="btn-win95 btn-win95-primary text-xs py-1 px-3">
+                                    📁 My Websites →
                                 </Link>
                                 <UserButton />
                             </>
                         ) : (
                             <>
-                                <Link href="/sign-in" className="btn-secondary" style={{ fontSize: "0.85rem", padding: "0.5rem 1.2rem" }}>
+                                <Link href="/sign-in" className="btn-win95 text-xs py-1 px-3">
                                     Sign In
                                 </Link>
-                                <Link href="/sign-in" className="btn-primary" style={{ fontSize: "0.85rem", padding: "0.5rem 1.2rem" }}>
-                                    Get Started →
+                                <Link href="/sign-in" className="btn-win95 btn-win95-primary text-xs py-1 px-3">
+                                    ⚡ Start Crafting
                                 </Link>
                             </>
                         )}
@@ -99,528 +85,431 @@ export default async function HomePage() {
                 </div>
             </header>
 
-            <main style={{ flex: 1 }}>
-                {/* ── Hero Section ─────────────────────────────────────── */}
-                <section
-                    style={{
-                        maxWidth: "1100px",
-                        margin: "0 auto",
-                        padding: "5rem 1.5rem 4rem",
-                        display: "grid",
-                        gridTemplateColumns: "1fr 1fr",
-                        gap: "4rem",
-                        alignItems: "center",
-                        position: "relative",
-                    }}
-                >
-                    {/* Big amber circle decoration */}
-                    <div
-                        style={{
-                            position: "absolute",
-                            top: "2rem",
-                            left: "-3rem",
-                            width: "420px",
-                            height: "420px",
-                            borderRadius: "50%",
-                            background: "var(--tertiary)",
-                            opacity: 0.15,
-                            zIndex: 0,
-                            pointerEvents: "none",
-                        }}
-                    />
-
-                    {/* Left — Text */}
-                    <div style={{ position: "relative", zIndex: 1 }}>
-                        <div className="animate-bounce-in" style={{ animationDelay: "0ms" }}>
-                            <span className="badge" style={{ marginBottom: "1.25rem", display: "inline-flex" }}>
-                                ✨ Powered by Gemini AI
-                            </span>
+            {/* ── Main Body ────────────────────────────────────────────── */}
+            <main className="flex-1 max-w-5xl w-full mx-auto px-3 py-6">
+                
+                {/* ── Hero Section (Windows 95 Window Aesthetic) ──────── */}
+                <section className="win-window mb-8">
+                    <div className="win-titlebar">
+                        <div className="flex items-center gap-2">
+                            <span>💾 C:\PROGRAMS\CRAFTLY\HTML_GENERATOR.EXE</span>
+                            <span className="badge-new">NEW v1.0</span>
                         </div>
-
-                        <h1
-                            className="animate-slide-up"
-                            style={{
-                                fontFamily: "var(--font-outfit), Outfit, sans-serif",
-                                fontSize: "clamp(2.5rem, 5vw, 3.8rem)",
-                                fontWeight: 800,
-                                color: "var(--foreground)",
-                                lineHeight: 1.1,
-                                marginBottom: "1.25rem",
-                                animationDelay: "100ms",
-                            }}
-                        >
-                            Build Apps.{" "}
-                            <span className="squiggle-underline" style={{ color: "var(--accent)" }}>
-                                Just Describe.
-                            </span>
-                        </h1>
-
-                        <p
-                            className="animate-slide-up"
-                            style={{
-                                fontSize: "1.1rem",
-                                color: "var(--muted-foreground)",
-                                lineHeight: 1.7,
-                                marginBottom: "2rem",
-                                maxWidth: "480px",
-                                animationDelay: "200ms",
-                            }}
-                        >
-                            Type what you want to build. Craftly's AI writes the code,
-                            spins up a live preview, and delivers a fully working app —
-                            instantly.
-                        </p>
-
-                        <div
-                            className="animate-slide-up"
-                            style={{
-                                display: "flex",
-                                gap: "0.75rem",
-                                flexWrap: "wrap",
-                                animationDelay: "300ms",
-                            }}
-                        >
-                            <Link href={userId ? "/projects" : "/sign-in"} className="btn-primary">
-                                <span>Start Building</span>
-                                <span
-                                    style={{
-                                        width: "24px",
-                                        height: "24px",
-                                        borderRadius: "50%",
-                                        background: "white",
-                                        display: "flex",
-                                        alignItems: "center",
-                                        justifyContent: "center",
-                                    }}
-                                >
-                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" strokeWidth="2.5">
-                                        <path d="M5 12h14M12 5l7 7-7 7" strokeLinecap="round" strokeLinejoin="round" />
-                                    </svg>
-                                </span>
-                            </Link>
-                            <a
-                                href="#features"
-                                className="btn-secondary"
-                            >
-                                See how it works
-                            </a>
-                        </div>
-
-                        {/* Social proof */}
-                        <div
-                            className="animate-slide-up"
-                            style={{
-                                marginTop: "2.5rem",
-                                display: "flex",
-                                alignItems: "center",
-                                gap: "0.75rem",
-                                animationDelay: "400ms",
-                            }}
-                        >
-                            <div style={{ display: "flex" }}>
-                                {["#8B5CF6", "#F472B6", "#FBBF24", "#34D399"].map((c, i) => (
-                                    <div
-                                        key={i}
-                                        style={{
-                                            width: "32px",
-                                            height: "32px",
-                                            borderRadius: "50%",
-                                            background: c,
-                                            border: "2px solid var(--background)",
-                                            marginLeft: i === 0 ? 0 : "-8px",
-                                        }}
-                                    />
-                                ))}
-                            </div>
-                            <span style={{ fontSize: "0.85rem", color: "var(--muted-foreground)", fontWeight: 500 }}>
-                                Join <strong style={{ color: "var(--foreground)" }}>1,000+</strong> builders using Craftly
-                            </span>
+                        <div className="flex items-center">
+                            <span className="win-btn-control">_</span>
+                            <span className="win-btn-control">□</span>
+                            <span className="win-btn-control">✕</span>
                         </div>
                     </div>
 
-                    {/* Right — Mock UI Card */}
-                    <div
-                        style={{ position: "relative", zIndex: 1 }}
-                        className="animate-float"
-                    >
-                        {/* Dot grid backdrop */}
-                        <div
-                            className="dot-grid"
-                            style={{
-                                position: "absolute",
-                                inset: "-20px",
-                                borderRadius: "var(--radius-lg)",
-                                zIndex: 0,
-                            }}
-                        />
-                        {/* Mock card */}
-                        <div
-                            style={{
-                                position: "relative",
-                                zIndex: 1,
-                                background: "white",
-                                border: "2px solid var(--foreground)",
-                                borderRadius: "var(--radius-lg)",
-                                boxShadow: "var(--shadow-pop-hover)",
-                                padding: "1.5rem",
-                                maxWidth: "420px",
-                                margin: "0 auto",
-                            }}
-                        >
-                            {/* Browser chrome */}
-                            <div style={{ display: "flex", alignItems: "center", gap: "0.4rem", marginBottom: "1rem" }}>
-                                {["#ef4444", "#fbbf24", "#34d399"].map((c, i) => (
-                                    <div key={i} style={{ width: 10, height: 10, borderRadius: "50%", background: c, border: "1.5px solid rgba(0,0,0,0.15)" }} />
-                                ))}
-                                <div style={{ flex: 1, height: "24px", background: "var(--muted)", borderRadius: "6px", marginLeft: "0.5rem" }} />
-                            </div>
-
-                            {/* Prompt input mock */}
-                            <div
-                                style={{
-                                    background: "var(--muted)",
-                                    borderRadius: "var(--radius-md)",
-                                    padding: "1rem",
-                                    marginBottom: "1rem",
-                                    border: "1.5px solid var(--border)",
-                                }}
-                            >
-                                <p style={{ fontSize: "0.8rem", color: "var(--muted-foreground)", margin: 0, fontStyle: "italic" }}>
-                                    "Build me a todo app with dark mode and local storage..."
-                                </p>
-                            </div>
-
-                            {/* Generating animation */}
-                            <div style={{ display: "flex", gap: "0.5rem", marginBottom: "1rem" }}>
-                                {[
-                                    { color: "var(--accent)", label: "Writing code..." },
-                                    { color: "var(--quaternary)", label: "Done ✓" },
-                                ].map((step, i) => (
-                                    <div
-                                        key={i}
-                                        style={{
-                                            flex: 1,
-                                            background: step.color + "22",
-                                            border: `1.5px solid ${step.color}`,
-                                            borderRadius: "var(--radius-sm)",
-                                            padding: "0.4rem 0.6rem",
-                                            fontSize: "0.7rem",
-                                            fontWeight: 600,
-                                            color: step.color === "var(--accent)" ? "var(--accent)" : "#059669",
-                                        }}
-                                    >
-                                        {step.label}
-                                    </div>
-                                ))}
-                            </div>
-
-                            {/* Mini preview */}
-                            <div
-                                style={{
-                                    background: "#1e293b",
-                                    borderRadius: "var(--radius-md)",
-                                    padding: "1rem",
-                                    height: "120px",
-                                    display: "flex",
-                                    flexDirection: "column",
-                                    gap: "0.5rem",
-                                }}
-                            >
-                                <div style={{ height: "12px", background: "#334155", borderRadius: "4px", width: "60%" }} />
-                                <div style={{ height: "8px", background: "#334155", borderRadius: "4px", width: "80%" }} />
-                                <div style={{ height: "8px", background: "#334155", borderRadius: "4px", width: "45%" }} />
-                                <div style={{ display: "flex", gap: "0.5rem", marginTop: "auto" }}>
-                                    <div style={{ height: "28px", flex: 1, background: "var(--accent)", borderRadius: "6px" }} />
-                                    <div style={{ height: "28px", width: "28px", background: "#475569", borderRadius: "6px" }} />
-                                </div>
-                            </div>
+                    <div className="p-4 md:p-6 bg-[#c0c0c0]">
+                        {/* Under Construction / Retro Badges */}
+                        <div className="flex flex-wrap items-center gap-2 mb-4">
+                            <span className="badge-hot">🔥 100% PURE HTML/CSS/JS</span>
+                            <span className="badge-retro font-mono">⚡ ZERO RUNTIME OVERHEAD</span>
+                            <span className="badge-retro font-mono">🌐 W3C COMPLIANT CODE</span>
+                            <span className="badge-retro font-mono hidden sm:inline-block">💾 WORKS OFFLINE</span>
                         </div>
-                    </div>
-                </section>
 
-                {/* ── Marquee ──────────────────────────────────────────── */}
-                <div
-                    style={{
-                        borderTop: "2px solid var(--border)",
-                        borderBottom: "2px solid var(--border)",
-                        background: "var(--foreground)",
-                        padding: "0.8rem 0",
-                        overflow: "hidden",
-                    }}
-                >
-                    <div className="animate-marquee">
-                        {[...Array(2)].map((_, idx) => (
-                            <div key={idx} style={{ display: "flex", gap: "2rem", paddingRight: "2rem" }}>
-                                {["React", "TypeScript", "Next.js", "Tailwind CSS", "Node.js", "PostgreSQL", "AI-Powered", "Live Preview", "Instant Deploy", "Export Code", "React", "TypeScript", "Next.js", "Tailwind CSS"].map((item, i) => (
-                                    <span
-                                        key={i}
-                                        style={{
-                                            fontFamily: "var(--font-outfit), Outfit, sans-serif",
-                                            fontWeight: 700,
-                                            fontSize: "0.85rem",
-                                            color: ["white", "var(--tertiary)", "var(--secondary)", "var(--quaternary)"][i % 4] as string,
-                                            letterSpacing: "0.05em",
-                                            whiteSpace: "nowrap",
-                                        }}
-                                    >
-                                        {i % 2 === 0 ? "★" : "◆"} {item}
+                        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+                            {/* Left Text */}
+                            <div className="lg:col-span-7">
+                                <h1 className="text-3xl sm:text-4xl md:text-5xl font-black uppercase tracking-tight mb-3">
+                                    Build Websites{" "}
+                                    <span className="text-rainbow block text-4xl sm:text-5xl md:text-6xl mt-1">
+                                        Back to the Basics.
                                     </span>
-                                ))}
-                            </div>
-                        ))}
-                    </div>
-                </div>
+                                </h1>
 
-                {/* ── Features Section ──────────────────────────────────── */}
-                <section
-                    id="features"
-                    style={{
-                        maxWidth: "1100px",
-                        margin: "0 auto",
-                        padding: "5rem 1.5rem",
-                    }}
-                >
-                    <div style={{ textAlign: "center", marginBottom: "3.5rem" }}>
-                        <span className="badge" style={{ marginBottom: "1rem", display: "inline-flex" }}>
-                            🛠 How It Works
-                        </span>
-                        <h2
-                            style={{
-                                fontFamily: "var(--font-outfit), Outfit, sans-serif",
-                                fontSize: "clamp(1.8rem, 4vw, 2.8rem)",
-                                fontWeight: 800,
-                                color: "var(--foreground)",
-                            }}
-                        >
-                            Three steps to your app
-                        </h2>
-                    </div>
-
-                    <div
-                        style={{
-                            display: "grid",
-                            gridTemplateColumns: "repeat(3, 1fr)",
-                            gap: "1.5rem",
-                            position: "relative",
-                        }}
-                    >
-                        {/* Dashed connector line */}
-                        <div
-                            style={{
-                                position: "absolute",
-                                top: "3.5rem",
-                                left: "20%",
-                                right: "20%",
-                                height: "2px",
-                                background: "none",
-                                borderTop: "2px dashed var(--border)",
-                                zIndex: 0,
-                                pointerEvents: "none",
-                            }}
-                        />
-
-                        {[
-                            {
-                                icon: "✍️",
-                                color: "var(--accent)",
-                                num: "01",
-                                title: "Describe Your App",
-                                body: "Type a plain-English description of the app you want. Be as detailed or as vague as you like — Craftly figures out the rest.",
-                            },
-                            {
-                                icon: "⚡",
-                                color: "var(--secondary)",
-                                num: "02",
-                                title: "AI Writes the Code",
-                                body: "Gemini AI plans, scaffolds, and writes production-ready code in a live E2B sandbox. Fully functional in seconds.",
-                            },
-                            {
-                                icon: "🚀",
-                                color: "var(--quaternary)",
-                                num: "03",
-                                title: "Preview & Iterate",
-                                body: "See your app running live instantly. Send follow-up messages to refine, add features, or fix bugs — conversationally.",
-                            },
-                        ].map((feat, i) => (
-                            <div
-                                key={i}
-                                className="card-sticker animate-wiggle"
-                                style={{
-                                    padding: "2rem 1.5rem 1.5rem",
-                                    position: "relative",
-                                    zIndex: 1,
-                                    animationDelay: `${i * 100}ms`,
-                                }}
-                            >
-                                {/* Floating icon circle */}
-                                <div
-                                    style={{
-                                        position: "absolute",
-                                        top: "-20px",
-                                        left: "1.5rem",
-                                        width: "48px",
-                                        height: "48px",
-                                        borderRadius: "50%",
-                                        background: feat.color,
-                                        border: "2px solid var(--foreground)",
-                                        boxShadow: "3px 3px 0px var(--foreground)",
-                                        display: "flex",
-                                        alignItems: "center",
-                                        justifyContent: "center",
-                                        fontSize: "1.3rem",
-                                    }}
-                                >
-                                    {feat.icon}
+                                <div className="panel-notepad mb-4 text-sm font-sans">
+                                    <p className="font-bold text-black mb-1">
+                                        📝 <u>THE NO-FRAMEWORK REVOLUTION:</u>
+                                    </p>
+                                    <p className="text-black leading-relaxed">
+                                        Tired of 500MB <code className="bg-white px-1 border border-black font-mono">node_modules</code> and broken build pipelines? Craftly AI writes clean, handcrafted <strong>index.html</strong>, <strong>style.css</strong>, and <strong>script.js</strong> from your plain text prompts.
+                                    </p>
                                 </div>
 
-                                <div
-                                    style={{
-                                        fontFamily: "var(--font-outfit), Outfit, sans-serif",
-                                        fontWeight: 800,
-                                        fontSize: "2.5rem",
-                                        color: feat.color,
-                                        opacity: 0.2,
-                                        position: "absolute",
-                                        top: "0.75rem",
-                                        right: "1rem",
-                                        lineHeight: 1,
-                                    }}
-                                >
-                                    {feat.num}
+                                <div className="flex flex-wrap items-center gap-3 mb-6">
+                                    <Link
+                                        href={userId ? "/projects" : "/sign-in"}
+                                        className="btn-win95 btn-win95-primary text-sm py-2.5 px-6 font-bold flex items-center gap-2"
+                                    >
+                                        <span>🚀 CRAFT A WEBSITE NOW</span>
+                                        <span>→</span>
+                                    </Link>
+                                    <a
+                                        href="#comparison"
+                                        className="btn-win95 text-sm py-2.5 px-4 font-bold"
+                                    >
+                                        🔍 Why Pure HTML?
+                                    </a>
                                 </div>
 
-                                <h3
-                                    style={{
-                                        fontFamily: "var(--font-outfit), Outfit, sans-serif",
-                                        fontWeight: 700,
-                                        fontSize: "1.1rem",
-                                        marginTop: "1.5rem",
-                                        marginBottom: "0.6rem",
-                                        color: "var(--foreground)",
-                                    }}
-                                >
-                                    {feat.title}
-                                </h3>
-                                <p style={{ fontSize: "0.9rem", color: "var(--muted-foreground)", lineHeight: 1.6, margin: 0 }}>
-                                    {feat.body}
-                                </p>
+                                {/* Hit Counter Box */}
+                                <div className="bevel-outset p-2 inline-flex items-center gap-3 bg-[#c0c0c0]">
+                                    <span className="font-mono text-xs uppercase font-bold text-black">VISITOR COUNTER:</span>
+                                    <div className="hit-counter">
+                                        <span>0</span>
+                                        <span>0</span>
+                                        <span>4</span>
+                                        <span>8</span>
+                                        <span>2</span>
+                                        <span>9</span>
+                                        <span>1</span>
+                                    </div>
+                                    <span className="text-xs text-[#808080] font-mono hidden sm:inline">SINCE 1996</span>
+                                </div>
                             </div>
-                        ))}
+
+                            {/* Right Interactive Mock Window */}
+                            <div className="lg:col-span-5">
+                                <div className="win-window">
+                                    <div className="win-titlebar bg-gradient-to-r from-[#000080] to-[#1084d0]">
+                                        <div className="flex items-center gap-1.5 text-xs">
+                                            <span>📄 index.html • style.css • app.js</span>
+                                        </div>
+                                        <div className="flex items-center">
+                                            <span className="win-btn-control">✕</span>
+                                        </div>
+                                    </div>
+
+                                    {/* Code Preview Pane */}
+                                    <div className="bevel-inset p-3 bg-white font-mono text-xs leading-tight overflow-x-auto text-black">
+                                        <div className="text-[#808080] mb-1">
+                                            &lt;!-- Generated by Craftly AI --&gt;
+                                        </div>
+                                        <div>
+                                            <span className="text-[#0000ff]">&lt;!DOCTYPE</span> <span className="text-[#800080]">html</span>&gt;
+                                        </div>
+                                        <div>
+                                            <span className="text-[#0000ff]">&lt;html</span> <span className="text-[#ff0000]">lang</span>=<span className="text-[#008000]">&quot;en&quot;</span>&gt;
+                                        </div>
+                                        <div className="pl-3">
+                                            <span className="text-[#0000ff]">&lt;head&gt;</span>
+                                        </div>
+                                        <div className="pl-6 text-[#808080]">
+                                            &lt;title&gt;Retro Arcade 1999&lt;/title&gt;
+                                        </div>
+                                        <div className="pl-6">
+                                            <span className="text-[#0000ff]">&lt;link</span> <span className="text-[#ff0000]">rel</span>=<span className="text-[#008000]">&quot;stylesheet&quot;</span> <span className="text-[#ff0000]">href</span>=<span className="text-[#008000]">&quot;style.css&quot;</span>&gt;
+                                        </div>
+                                        <div className="pl-3">
+                                            <span className="text-[#0000ff]">&lt;/head&gt;</span>
+                                        </div>
+                                        <div className="pl-3">
+                                            <span className="text-[#0000ff]">&lt;body&gt;</span>
+                                        </div>
+                                        <div className="pl-6 text-[#000080] font-bold">
+                                            &lt;canvas id=&quot;game&quot; width=&quot;400&quot; height=&quot;300&quot;&gt;&lt;/canvas&gt;
+                                        </div>
+                                        <div className="pl-6">
+                                            <span className="text-[#0000ff]">&lt;script</span> <span className="text-[#ff0000]">src</span>=<span className="text-[#008000]">&quot;app.js&quot;</span>&gt;&lt;/script&gt;
+                                        </div>
+                                        <div className="pl-3">
+                                            <span className="text-[#0000ff]">&lt;/body&gt;</span>
+                                        </div>
+                                        <div>
+                                            <span className="text-[#0000ff]">&lt;/html&gt;</span>
+                                        </div>
+
+                                        <div className="mt-3 pt-2 border-t border-[#808080] flex items-center justify-between text-[11px] text-[#808080]">
+                                            <span>✓ Ready to preview</span>
+                                            <span className="text-[#00aa00] font-bold">0.02s Load Time</span>
+                                        </div>
+                                    </div>
+
+                                    {/* Action bar */}
+                                    <div className="mt-2 flex items-center justify-between gap-2 px-1">
+                                        <span className="text-[11px] font-mono text-[#808080]">3 files • 1.4 KB total</span>
+                                        <span className="btn-win95 btn-win95-success text-[11px] py-0.5 px-2">
+                                            ▶ LIVE PREVIEW
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </section>
 
-                {/* ── CTA Section ──────────────────────────────────────── */}
-                <section
-                    style={{
-                        background: "var(--foreground)",
-                        padding: "5rem 1.5rem",
-                        position: "relative",
-                        overflow: "hidden",
-                    }}
-                >
-                    {/* Decorative circles */}
-                    {[
-                        { color: "#8B5CF6", size: 200, top: "-80px", right: "10%" },
-                        { color: "#F472B6", size: 120, bottom: "-40px", left: "5%" },
-                        { color: "#FBBF24", size: 80, top: "50%", right: "30%" },
-                    ].map((d, i) => (
-                        <div
-                            key={i}
-                            style={{
-                                position: "absolute",
-                                width: d.size,
-                                height: d.size,
-                                borderRadius: "50%",
-                                background: d.color,
-                                opacity: 0.15,
-                                top: d.top,
-                                right: d.right,
-                                bottom: (d as any).bottom,
-                                left: (d as any).left,
-                                pointerEvents: "none",
-                            }}
-                        />
-                    ))}
+                <hr className="hr-groove" />
 
-                    <div
-                        style={{
-                            maxWidth: "640px",
-                            margin: "0 auto",
-                            textAlign: "center",
-                            position: "relative",
-                            zIndex: 1,
-                        }}
-                    >
-                        <span
-                            style={{
-                                fontFamily: "var(--font-outfit), Outfit, sans-serif",
-                                fontSize: "3rem",
-                                display: "block",
-                                marginBottom: "1rem",
-                            }}
-                        >
-                            🎉
-                        </span>
-                        <h2
-                            style={{
-                                fontFamily: "var(--font-outfit), Outfit, sans-serif",
-                                fontSize: "clamp(1.8rem, 4vw, 2.8rem)",
-                                fontWeight: 800,
-                                color: "white",
-                                marginBottom: "1rem",
-                            }}
-                        >
-                            Ready to build something{" "}
-                            <span style={{ color: "var(--tertiary)" }}>amazing?</span>
-                        </h2>
-                        <p
-                            style={{
-                                fontSize: "1.05rem",
-                                color: "#94a3b8",
-                                marginBottom: "2rem",
-                                lineHeight: 1.7,
-                            }}
-                        >
-                            No credit card required. No setup. Just describe your idea and
-                            watch Craftly build it for you.
+                {/* ── Comparison Section: Pure HTML/CSS/JS vs Modern Bloat ── */}
+                <section id="comparison" className="win-window mb-8">
+                    <div className="win-titlebar">
+                        <div className="flex items-center gap-2">
+                            <span>⚖️ SYSTEM COMPARISON: PURE BASICS VS. OVERENGINEERED BLOAT</span>
+                        </div>
+                        <div className="flex items-center">
+                            <span className="win-btn-control">_</span>
+                            <span className="win-btn-control">□</span>
+                            <span className="win-btn-control">✕</span>
+                        </div>
+                    </div>
+
+                    <div className="p-4 bg-[#c0c0c0]">
+                        <p className="text-xs font-mono mb-3 text-black">
+                            Table 1.1: Why going back to raw HTML, CSS and Vanilla JavaScript wins every single time.
                         </p>
-                        <Link href={userId ? "/projects" : "/sign-in"} className="btn-primary" style={{ fontSize: "1.05rem", padding: "0.8rem 2rem" }}>
-                            <span>Build Your First App</span>
-                            <span
-                                style={{
-                                    width: "28px",
-                                    height: "28px",
-                                    borderRadius: "50%",
-                                    background: "white",
-                                    display: "flex",
-                                    alignItems: "center",
-                                    justifyContent: "center",
-                                }}
-                            >
-                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" strokeWidth="2.5">
-                                    <path d="M5 12h14M12 5l7 7-7 7" strokeLinecap="round" strokeLinejoin="round" />
-                                </svg>
-                            </span>
-                        </Link>
+
+                        <div className="overflow-x-auto bevel-inset">
+                            <table className="table-retro">
+                                <thead>
+                                    <tr>
+                                        <th style={{ width: "25%" }}>Feature</th>
+                                        <th style={{ width: "37%", background: "#ffffcc" }}>Craftly 95 (Pure HTML/CSS/JS)</th>
+                                        <th style={{ width: "38%" }}>Heavy JS Frameworks (Next/React)</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td className="font-bold">Dependencies</td>
+                                        <td className="text-[#00aa00] font-bold bg-[#ffffcc]">0 packages (0 KB node_modules)</td>
+                                        <td className="text-[#ff0000]">1,400 packages (450 MB node_modules)</td>
+                                    </tr>
+                                    <tr>
+                                        <td className="font-bold">Build Step Required?</td>
+                                        <td className="text-[#00aa00] font-bold bg-[#ffffcc]">None! Double click .html to run</td>
+                                        <td className="text-[#ff0000]">Webpack / Vite / Babel compiling</td>
+                                    </tr>
+                                    <tr>
+                                        <td className="font-bold">Load Speed</td>
+                                        <td className="text-[#00aa00] font-bold bg-[#ffffcc]">&lt; 30 milliseconds (Instant)</td>
+                                        <td className="text-[#ff0000]">2.5 - 6.0 seconds hydration</td>
+                                    </tr>
+                                    <tr>
+                                        <td className="font-bold">Hosting Compatibility</td>
+                                        <td className="text-[#00aa00] font-bold bg-[#ffffcc]">Any web host, USB drive, floppy disk, S3</td>
+                                        <td className="text-[#ff0000]">Specialized Node.js edge serverless hosts</td>
+                                    </tr>
+                                    <tr>
+                                        <td className="font-bold">Longevity & Stability</td>
+                                        <td className="text-[#00aa00] font-bold bg-[#ffffcc]">Works today, worked in 1996, works in 2050</td>
+                                        <td className="text-[#ff0000]">Deprecated after 6 months (Major breaking changes)</td>
+                                    </tr>
+                                    <tr>
+                                        <td className="font-bold">Source Code Readability</td>
+                                        <td className="text-[#00aa00] font-bold bg-[#ffffcc]">Clean HTML markup, vanilla CSS, plain JS</td>
+                                        <td className="text-[#ff0000]">Minified chunks, bundled transpiled JS</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </section>
-            </main>
 
-            {/* ── Footer ──────────────────────────────────────────────── */}
-            <footer
-                style={{
-                    background: "var(--muted)",
-                    borderTop: "2px solid var(--border)",
-                    padding: "1.5rem",
-                    textAlign: "center",
-                }}
-            >
-                <p style={{ fontSize: "0.85rem", color: "var(--muted-foreground)", margin: 0 }}>
-                    Built with ❤️ and{" "}
-                    <span style={{ color: "var(--accent)", fontWeight: 600 }}>Craftly</span>{" "}
-                    © {new Date().getFullYear()}
-                </p>
-            </footer>
+                <hr className="hr-groove" />
+
+                {/* ── Feature Highlights (Windows 95 Card Grid) ────────── */}
+                <section id="features" className="mb-8">
+                    <div className="flex items-center justify-between mb-4">
+                        <div>
+                            <h2 className="text-2xl font-black uppercase tracking-tight text-black">
+                                🛠️ Webmaster Toolkit Capabilities
+                            </h2>
+                            <p className="text-xs font-mono text-[#808080]">Everything you need to craft lightning-fast web experiences.</p>
+                        </div>
+                        <span className="badge-hot hidden sm:inline-flex">★ 100% PURE WEB</span>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        {/* Feature 1 */}
+                        <div className="win-window">
+                            <div className="win-titlebar">
+                                <span>1. Natural Language to HTML</span>
+                                <span className="win-btn-control">_</span>
+                            </div>
+                            <div className="p-3 bg-[#c0c0c0]">
+                                <div className="bevel-inset p-3 bg-white mb-2 min-h-[100px]">
+                                    <div className="text-lg font-black uppercase text-black mb-1">🤖 AI Web Architect</div>
+                                    <p className="text-xs text-black leading-relaxed">
+                                        Describe your layout, widgets, animations, or logic in plain English. The AI generates semantic, accessible HTML5 elements.
+                                    </p>
+                                </div>
+                                <div className="text-right">
+                                    <span className="text-[11px] font-mono text-[#0000ff] font-bold">index.html ✓</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Feature 2 */}
+                        <div className="win-window">
+                            <div className="win-titlebar">
+                                <span>2. Handcrafted CSS3 Styling</span>
+                                <span className="win-btn-control">_</span>
+                            </div>
+                            <div className="p-3 bg-[#c0c0c0]">
+                                <div className="bevel-inset p-3 bg-white mb-2 min-h-[100px]">
+                                    <div className="text-lg font-black uppercase text-black mb-1">🎨 Pure CSS Power</div>
+                                    <p className="text-xs text-black leading-relaxed">
+                                        Zero utility bloat. Craftly produces structured CSS stylesheets with Flexbox, CSS Grid, keyframe animations, and responsive media queries.
+                                    </p>
+                                </div>
+                                <div className="text-right">
+                                    <span className="text-[11px] font-mono text-[#0000ff] font-bold">styles.css ✓</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Feature 3 */}
+                        <div className="win-window">
+                            <div className="win-titlebar">
+                                <span>3. Vanilla JavaScript Logic</span>
+                                <span className="win-btn-control">_</span>
+                            </div>
+                            <div className="p-3 bg-[#c0c0c0]">
+                                <div className="bevel-inset p-3 bg-white mb-2 min-h-[100px]">
+                                    <div className="text-lg font-black uppercase text-black mb-1">⚡ Interactive JS</div>
+                                    <p className="text-xs text-black leading-relaxed">
+                                        Native DOM manipulation, event listeners, localStorage persistence, Canvas graphics, and Web APIs without heavy framework overhead.
+                                    </p>
+                                </div>
+                                <div className="text-right">
+                                    <span className="text-[11px] font-mono text-[#0000ff] font-bold">script.js ✓</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <hr className="hr-groove" />
+
+                {/* ── Templates & Presets Showcase ────────────────────── */}
+                <section id="showcase" className="win-window mb-8">
+                    <div className="win-titlebar">
+                        <div className="flex items-center gap-2">
+                            <span>📂 TEMPLATE GALLERY: WHAT YOU CAN CRAFT</span>
+                        </div>
+                        <div className="flex items-center">
+                            <span className="win-btn-control">_</span>
+                            <span className="win-btn-control">□</span>
+                            <span className="win-btn-control">✕</span>
+                        </div>
+                    </div>
+
+                    <div className="p-4 bg-[#c0c0c0]">
+                        <p className="text-xs font-mono mb-4 text-black">
+                            Select any archetype or describe your custom website idea:
+                        </p>
+
+                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3">
+                            {[
+                                {
+                                    title: "🕹️ 2D Canvas Game",
+                                    desc: "Retro Space Invaders, Snake, or Pong using HTML5 Canvas & vanilla JS loop.",
+                                    tag: "CANVAS + JS",
+                                    tagColor: "#ff0000",
+                                },
+                                {
+                                    title: "📋 Interactive Todo App",
+                                    desc: "Task manager with local storage, drag re-ordering, and audio sound effects.",
+                                    tag: "DOM + STORAGE",
+                                    tagColor: "#0000ff",
+                                },
+                                {
+                                    title: "🛍️ E-Commerce Catalog",
+                                    desc: "Product grid with client-side filters, search, shopping cart modal & checkout.",
+                                    tag: "FLEXBOX + JS",
+                                    tagColor: "#00aa00",
+                                },
+                                {
+                                    title: "🎨 GeoCities Portfolio",
+                                    desc: "Nostalgic personal website with beveled cards, marquee ticker & retro guestbook.",
+                                    tag: "RETRO CSS",
+                                    tagColor: "#800080",
+                                },
+                            ].map((item, idx) => (
+                                <div key={idx} className="bevel-outset p-3 bg-[#c0c0c0] flex flex-col justify-between">
+                                    <div>
+                                        <div className="flex items-center justify-between mb-2">
+                                            <span
+                                                className="text-[10px] font-black text-white px-1.5 py-0.5"
+                                                style={{ background: item.tagColor }}
+                                            >
+                                                {item.tag}
+                                            </span>
+                                            <span className="text-[10px] font-mono text-[#808080]">PRESET</span>
+                                        </div>
+                                        <h3 className="font-bold text-sm text-black mb-1">{item.title}</h3>
+                                        <p className="text-xs text-black leading-normal mb-3">{item.desc}</p>
+                                    </div>
+                                    <Link
+                                        href={userId ? "/projects" : "/sign-in"}
+                                        className="btn-win95 text-xs py-1 px-2 w-full text-center"
+                                    >
+                                        Craft This →
+                                    </Link>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </section>
+
+                <hr className="hr-groove" />
+
+                {/* ── Construction Stripes CTA Banner ─────────────────── */}
+                <section className="bevel-outset p-1 mb-8">
+                    <div className="bg-construction p-6 text-center">
+                        <div className="bevel-outset p-6 bg-[#c0c0c0] max-w-2xl mx-auto">
+                            <div className="inline-block bg-[#000080] text-[#ffff00] px-3 py-1 font-mono font-bold text-sm mb-3 border border-black">
+                                🚧 STOP OVERENGINEERING. START CRAFTING. 🚧
+                            </div>
+                            <h2 className="text-2xl sm:text-3xl font-black uppercase text-black mb-2">
+                                Ready to Generate Clean HTML, CSS & JS?
+                            </h2>
+                            <p className="text-xs sm:text-sm text-black mb-4 font-sans max-w-lg mx-auto">
+                                Join web developers, hobbyists, and creators rediscovering the speed, purity, and fun of raw web technologies.
+                            </p>
+                            <div className="flex flex-wrap items-center justify-center gap-3">
+                                <Link
+                                    href={userId ? "/projects" : "/sign-in"}
+                                    className="btn-win95 btn-win95-primary text-sm py-2.5 px-6 font-bold"
+                                >
+                                    ⚡ LAUNCH CRAFTLY STUDIO (FREE)
+                                </Link>
+                                <a
+                                    href="#comparison"
+                                    className="btn-win95 text-sm py-2.5 px-4 font-bold"
+                                >
+                                    📖 Read Documentation
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                {/* ── Retro 90s Webmaster Footer ──────────────────────── */}
+                <footer className="bevel-outset p-4 bg-[#c0c0c0] text-center text-xs">
+                    <div className="flex flex-wrap items-center justify-center gap-4 mb-3 text-black font-mono">
+                        <Link href="/">Home</Link>
+                        <span>•</span>
+                        <a href="#features">Features</a>
+                        <span>•</span>
+                        <a href="#comparison">Why HTML?</a>
+                        <span>•</span>
+                        <a href="#showcase">Presets</a>
+                        <span>•</span>
+                        <Link href={userId ? "/projects" : "/sign-in"}>Open Studio</Link>
+                    </div>
+
+                    <div className="flex flex-wrap items-center justify-center gap-3 mb-3">
+                        <span className="bevel-inset px-2 py-1 bg-white font-mono text-[11px] text-black">
+                            🖥️ BEST VIEWED IN 800x600 RESOLUTION
+                        </span>
+                        <span className="bevel-inset px-2 py-1 bg-white font-mono text-[11px] text-black">
+                            🌐 NETSCAPE 3.0 & IE 4.0 COMPATIBLE
+                        </span>
+                        <span className="bevel-inset px-2 py-1 bg-white font-mono text-[11px] text-black">
+                            ✨ POWERED BY GEMINI AI
+                        </span>
+                    </div>
+
+                    <p className="text-[11px] text-[#808080] font-mono">
+                        © 1996 - 2026 Craftly. All Rights Reserved. Handcrafted with authentic HTML, CSS & JavaScript.
+                    </p>
+                </footer>
+
+            </main>
         </div>
     );
 }
