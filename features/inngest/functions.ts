@@ -120,7 +120,7 @@ export const codeAgentFunction = inngest.createFunction(
                 // 2. createOrUpdateFiles
                 createTool({
                     name: "createOrUpdateFiles",
-                    description: "Create or update files in the sanbox",
+                    description: "Create or update multiple files in the sandbox",
                     parameters: z.object({
                         files: z.array(
                             z.object({
@@ -138,29 +138,85 @@ export const codeAgentFunction = inngest.createFunction(
                                     const updatedFiles =
                                         network?.state?.data.files || {};
 
-                                    const sanbox =
+                                    const sandbox =
                                         await Sandbox.connect(sandboxId);
 
                                     for (const file of files) {
-                                        await sanbox.files.write(
-                                            file.path,
+                                        const cleanPath = file.path
+                                            .replace(/^\/home\/user\//, "")
+                                            .replace(/^\//, "")
+                                            .replace(/^\.\//, "");
+                                        const absolutePath = `/home/user/${cleanPath}`;
+
+                                        await sandbox.files.write(
+                                            absolutePath,
                                             file.content,
                                         );
-                                        updatedFiles[file.path] = file.content;
+                                        updatedFiles[cleanPath] = file.content;
                                     }
 
                                     return updatedFiles;
                                 } catch (error) {
-                                    return "Error" + error;
+                                    return "Error: " + error;
                                 }
                             },
                         );
 
-                        if (typeof newFiles === "object") {
-                            network.state.data.files = newFiles;
+                        if (typeof newFiles === "object" && newFiles !== null) {
+                            if (network?.state?.data) {
+                                network.state.data.files = newFiles;
+                            }
+                            return `Successfully updated ${files.length} file(s): ${files.map((f) => f.path).join(", ")}`;
                         }
+                        return String(newFiles);
                     },
                 }),
+
+                // 2b. createOrUpdateFile (single file helper)
+                createTool({
+                    name: "createOrUpdateFile",
+                    description: "Create or update a single file in the sandbox",
+                    parameters: z.object({
+                        path: z.string(),
+                        content: z.string(),
+                    }),
+                    handler: async ({ path, content }, { step, network }) => {
+                        const newFiles = await step?.run(
+                            "createOrUpdateFile",
+                            async () => {
+                                try {
+                                    const updatedFiles =
+                                        network?.state?.data.files || {};
+
+                                    const sandbox =
+                                        await Sandbox.connect(sandboxId);
+
+                                    const cleanPath = path
+                                        .replace(/^\/home\/user\//, "")
+                                        .replace(/^\//, "")
+                                        .replace(/^\.\//, "");
+                                    const absolutePath = `/home/user/${cleanPath}`;
+
+                                    await sandbox.files.write(absolutePath, content);
+                                    updatedFiles[cleanPath] = content;
+
+                                    return updatedFiles;
+                                } catch (error) {
+                                    return "Error: " + error;
+                                }
+                            },
+                        );
+
+                        if (typeof newFiles === "object" && newFiles !== null) {
+                            if (network?.state?.data) {
+                                network.state.data.files = newFiles;
+                            }
+                            return `Successfully updated file: ${path}`;
+                        }
+                        return String(newFiles);
+                    },
+                }),
+
                 // 3. readFiles
                 createTool({
                     name: "readFiles",
@@ -172,19 +228,23 @@ export const codeAgentFunction = inngest.createFunction(
                     handler: async ({ files }, { step }) => {
                         return await step?.run("readFiles", async () => {
                             try {
-                                const sanbox = await Sandbox.connect(sandboxId);
+                                const sandbox = await Sandbox.connect(sandboxId);
 
                                 const contents: any = [];
-                                console.log(contents);
-
                                 for (const file of files) {
+                                    const cleanPath = file
+                                        .replace(/^\/home\/user\//, "")
+                                        .replace(/^\//, "")
+                                        .replace(/^\.\//, "");
+                                    const absolutePath = `/home/user/${cleanPath}`;
+
                                     const content =
-                                        await sanbox.files.read(file);
-                                    contents.push({ path: file, content });
+                                        await sandbox.files.read(absolutePath);
+                                    contents.push({ path: cleanPath, content });
                                 }
                                 return JSON.stringify(contents);
                             } catch (error) {
-                                return "Error" + error;
+                                return "Error: " + error;
                             }
                         });
                     },
@@ -259,7 +319,7 @@ export const codeAgentFunction = inngest.createFunction(
 
         const sandboxUrl = await step.run("get-sandbox-url", async () => {
             const sandbox = await connectSandbox(sandboxId);
-            return `http://${sandbox.getHost(3000)}`;
+            return `https://${sandbox.getHost(3000)}`;
         });
 
         await step.run("save-result", async () => {
