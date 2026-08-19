@@ -68,7 +68,7 @@ export default function ProjectsPage() {
                 {/* Title bar */}
                 <div className="win-titlebar">
                     <div className="flex items-center gap-2">
-                        <span>⌨️ C:\PROGRAMS\CRAFTLY\NEW_PROJECT_WIZARD.EXE</span>
+                        <span>⌨️ C:\PROGRAMS\CRAFTLY\NEW_PROJECT_WIZARD.EXE - [Craftly 95]</span>
                         <span className="badge-new">PURE HTML/CSS/JS</span>
                     </div>
                     <div className="flex items-center">
@@ -82,10 +82,10 @@ export default function ProjectsPage() {
                     <div className="flex items-center justify-between mb-2">
                         <div>
                             <h1 className="text-xl sm:text-2xl font-black uppercase text-black">
-                                What website do you want to craft?
+                                Craftly 95: Make AI Mediocre Again
                             </h1>
-                            <p className="text-xs font-mono text-[#808080]">
-                                Describe your layout & functionality. Craftly will generate clean HTML, CSS & JS.
+                            <p className="text-xs font-mono text-[#000080] font-bold">
+                                Craftly is an AI website builder that generates pure HTML/CSS/JavaScript.
                             </p>
                         </div>
                         <span className="badge-hot hidden sm:inline-flex">⚡ ZERO FRAMEWORKS</span>
@@ -136,7 +136,7 @@ export default function ProjectsPage() {
                                 {createProject.isPending ? (
                                     <>
                                         <span className="animate-pulse">⏳</span>
-                                        <span>COMPILING HTML...</span>
+                                        <span>GENERATING HTML/CSS/JS...</span>
                                     </>
                                 ) : (
                                     <>
@@ -174,7 +174,7 @@ export default function ProjectsPage() {
                         <div className="text-xs font-mono text-black">
                             <span>Directory Listing of Generated Pure HTML/CSS/JS Websites</span>
                         </div>
-                        <span className="text-xs font-mono text-[#808080]">File Type: Web Application</span>
+                        <span className="text-xs font-mono text-[#808080]">File Type: Pure HTML/CSS/JS Web App</span>
                     </div>
 
                     {/* Loading State */}
@@ -191,7 +191,7 @@ export default function ProjectsPage() {
                             <div className="text-3xl mb-2">📁</div>
                             <h3 className="font-bold text-sm text-black mb-1 uppercase">Directory is empty (0 files)</h3>
                             <p className="text-xs font-mono text-[#808080] max-w-sm mx-auto mb-4">
-                                You haven&apos;t crafted any HTML/CSS/JS websites yet. Enter a prompt in the console wizard above to build your first website.
+                                Craftly is an AI website builder that generates pure HTML/CSS/JavaScript. Enter a prompt in the console wizard above to build your first website.
                             </p>
                             <button
                                 type="button"

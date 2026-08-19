@@ -93,7 +93,7 @@ export default function ProjectDetailClient({ project }: ProjectDetailClientProp
                             ←
                         </Link>
                         <span className="truncate font-mono">
-                            💬 Webmaster_Assistant.exe - [{project.name}]
+                            💬 Craftly_95_Assistant.exe - [{project.name}]
                         </span>
                     </div>
                     <div className="flex items-center">
@@ -108,7 +108,7 @@ export default function ProjectDetailClient({ project }: ProjectDetailClientProp
                     <div className="flex items-center gap-1.5">
                         <span className="w-2.5 h-2.5 bg-[#00ff00] border border-black inline-block" />
                         <span className="font-bold text-black">
-                            {isProcessing ? "COMPILING CODE..." : "READY"}
+                            {isProcessing ? "COMPILING HTML/CSS/JS..." : "READY"}
                         </span>
                     </div>
                     <span className="text-[#808080]">
@@ -133,7 +133,7 @@ export default function ProjectDetailClient({ project }: ProjectDetailClientProp
                             }`}
                         >
                             <div className="text-[10px] font-mono text-[#808080] px-1">
-                                {msg.role === "USER" ? "USER COMMAND" : "CRAFTLY ASSISTANT"}
+                                {msg.role === "USER" ? "USER COMMAND" : "CRAFTLY 95 ASSISTANT"}
                             </div>
 
                             <div
@@ -218,7 +218,7 @@ export default function ProjectDetailClient({ project }: ProjectDetailClientProp
                 {/* Title Bar */}
                 <div className="win-titlebar bg-gradient-to-r from-[#000080] to-[#1084d0]">
                     <div className="flex items-center gap-2">
-                        <span>🌐 Internet_Browser_95.exe - [Sandbox Preview]</span>
+                        <span>🌐 Internet_Browser_95.exe - [Craftly 95 Live Preview]</span>
                     </div>
                     <div className="flex items-center">
                         <span className="win-btn-control">_</span>
@@ -318,10 +318,10 @@ export default function ProjectDetailClient({ project }: ProjectDetailClientProp
                                 <div className="win-window max-w-sm w-full p-6 text-center">
                                     <div className="text-3xl mb-2 animate-bounce">⏳</div>
                                     <h3 className="font-bold text-sm uppercase mb-1">
-                                        Craftly AI is generating code...
+                                        Craftly is generating pure HTML/CSS/JS...
                                     </h3>
                                     <p className="font-mono text-xs text-[#808080] mb-3">
-                                        Writing clean HTML, CSS, and JS files into an isolated sandbox environment.
+                                        Craftly 95: Writing clean, handcrafted HTML, CSS, and JS files into an isolated sandbox.
                                     </p>
                                     <div className="bevel-inset p-1 bg-white">
                                         <div className="h-4 bg-[#000080] animate-pulse" />

@@ -7,55 +7,16 @@ export default async function HomePage() {
 
     return (
         <div className="min-h-screen flex flex-col bg-90s-tile text-black">
-            {/* ── Top Marquee Announcement Ticker ─────────────────────── */}
-            <div className="marquee-container" aria-label="Announcement Ticker">
-                <div className="marquee-content">
-                    <span className="mx-6">
-                        🚨 <strong style={{ color: "#ffffff" }}>CRAFTLY v1.0 RELEASED:</strong> BACK TO THE BASICS! GENERATE PURE HTML, CSS & JAVASCRIPT WEBSITES WITH AI 🚨
-                    </span>
-                    <span className="mx-6 text-[#00ff00]">
-                        ★ NO NODE_MODULES ★ NO WEBPACK ★ NO BUILD FAILURES ★ 100% CLEAN SOURCE CODE ★
-                    </span>
-                    <span className="mx-6 text-[#ff5555]">
-                        ⚡ INSTANT SANDBOX PREVIEWS • DOWNLOAD RAW .ZIP • RUNS EVERYWHERE ⚡
-                    </span>
-                    <span className="mx-6">
-                        🚨 <strong style={{ color: "#ffffff" }}>CRAFTLY v1.0 RELEASED:</strong> BACK TO THE BASICS! GENERATE PURE HTML, CSS & JAVASCRIPT WEBSITES WITH AI 🚨
-                    </span>
-                    <span className="mx-6 text-[#00ff00]">
-                        ★ NO NODE_MODULES ★ NO WEBPACK ★ NO BUILD FAILURES ★ 100% CLEAN SOURCE CODE ★
-                    </span>
-                    <span className="mx-6 text-[#ff5555]">
-                        ⚡ INSTANT SANDBOX PREVIEWS • DOWNLOAD RAW .ZIP • RUNS EVERYWHERE ⚡
-                    </span>
-                </div>
-            </div>
-
             {/* ── Windows 95 Navigation Bar ────────────────────────────── */}
             <header className="bevel-outset sticky top-0 z-50 mx-2 mt-2 bg-[#c0c0c0]">
-                {/* Title Bar */}
-                <div className="win-titlebar">
-                    <div className="flex items-center gap-2">
-                        <span className="inline-block w-3 h-3 bg-[#ffff00] border border-black" />
-                        <span>Craftly_Studio_95.exe - [Internet Webmaster Edition]</span>
-                    </div>
-                    <div className="flex items-center">
-                        <span className="win-btn-control">_</span>
-                        <span className="win-btn-control">□</span>
-                        <span className="win-btn-control text-[#ff0000]">✕</span>
-                    </div>
-                </div>
-
                 {/* Menu Bar */}
-                <div className="flex items-center justify-between px-3 py-1.5 border-b border-[#808080] text-xs">
+                <div className="flex items-center justify-between px-3 py-2 text-xs">
                     <div className="flex items-center gap-4">
                         <Link href="/" className="font-black text-sm tracking-tight text-black no-underline flex items-center gap-1.5">
                             <span className="bg-[#000080] text-white px-1.5 py-0.5 border border-black font-mono font-bold">C:\&gt;</span>
-                            <span className="font-black text-base">CRAFT<span className="text-[#0000ff]">LY</span></span>
+                            <span className="font-black text-base">CRAFT<span className="text-[#0000ff]">LY 95</span></span>
                         </Link>
                         <div className="hidden md:flex items-center gap-3 text-black">
-                            <span className="hover:bg-[#000080] hover:text-white px-1.5 py-0.5 cursor-pointer select-none"><u>F</u>ile</span>
-                            <span className="hover:bg-[#000080] hover:text-white px-1.5 py-0.5 cursor-pointer select-none"><u>E</u>dit</span>
                             <a href="#features" className="hover:bg-[#000080] hover:text-white px-1.5 py-0.5 cursor-pointer select-none no-underline text-black"><u>V</u>iew Features</a>
                             <a href="#comparison" className="hover:bg-[#000080] hover:text-white px-1.5 py-0.5 cursor-pointer select-none no-underline text-black"><u>C</u>omparison</a>
                             <a href="#showcase" className="hover:bg-[#000080] hover:text-white px-1.5 py-0.5 cursor-pointer select-none no-underline text-black"><u>T</u>emplates</a>
@@ -92,8 +53,8 @@ export default async function HomePage() {
                 <section className="win-window mb-8">
                     <div className="win-titlebar">
                         <div className="flex items-center gap-2">
-                            <span>💾 C:\PROGRAMS\CRAFTLY\HTML_GENERATOR.EXE</span>
-                            <span className="badge-new">NEW v1.0</span>
+                            <span>💾 C:\PROGRAMS\CRAFTLY\HTML_GENERATOR.EXE - [Craftly 95]</span>
+                            <span className="badge-new">v1.0</span>
                         </div>
                         <div className="flex items-center">
                             <span className="win-btn-control">_</span>
@@ -105,28 +66,28 @@ export default async function HomePage() {
                     <div className="p-4 md:p-6 bg-[#c0c0c0]">
                         {/* Under Construction / Retro Badges */}
                         <div className="flex flex-wrap items-center gap-2 mb-4">
-                            <span className="badge-hot">🔥 100% PURE HTML/CSS/JS</span>
-                            <span className="badge-retro font-mono">⚡ ZERO RUNTIME OVERHEAD</span>
-                            <span className="badge-retro font-mono">🌐 W3C COMPLIANT CODE</span>
-                            <span className="badge-retro font-mono hidden sm:inline-block">💾 WORKS OFFLINE</span>
+                            <span className="badge-hot">🔥 CRAFTLY 95</span>
+                            <span className="badge-retro font-mono">⚡ PURE HTML/CSS/JS</span>
+                            <span className="badge-retro font-mono">🌐 ZERO BUILD PIPELINES</span>
+                            <span className="badge-retro font-mono hidden sm:inline-block">💾 RUNS EVERYWHERE</span>
                         </div>
 
                         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
                             {/* Left Text */}
                             <div className="lg:col-span-7">
                                 <h1 className="text-3xl sm:text-4xl md:text-5xl font-black uppercase tracking-tight mb-3">
-                                    Build Websites{" "}
-                                    <span className="text-rainbow block text-4xl sm:text-5xl md:text-6xl mt-1">
-                                        Back to the Basics.
+                                    Craftly 95:{" "}
+                                    <span className="text-rainbow block text-3xl sm:text-4xl md:text-5xl mt-1">
+                                        Make AI Mediocre Again.
                                     </span>
                                 </h1>
 
                                 <div className="panel-notepad mb-4 text-sm font-sans">
                                     <p className="font-bold text-black mb-1">
-                                        📝 <u>THE NO-FRAMEWORK REVOLUTION:</u>
+                                        📝 <u>PURE HTML / CSS / JAVASCRIPT BUILDER:</u>
                                     </p>
                                     <p className="text-black leading-relaxed">
-                                        Tired of 500MB <code className="bg-white px-1 border border-black font-mono">node_modules</code> and broken build pipelines? Craftly AI writes clean, handcrafted <strong>index.html</strong>, <strong>style.css</strong>, and <strong>script.js</strong> from your plain text prompts.
+                                        <strong>Craftly is an AI website builder that generates pure HTML/CSS/JavaScript.</strong> Tired of 500MB <code className="bg-white px-1 border border-black font-mono">node_modules</code> and broken build pipelines? Craftly writes clean, handcrafted <strong>index.html</strong>, <strong>style.css</strong>, and <strong>script.js</strong> from your plain text prompts.
                                     </p>
                                 </div>
 
@@ -452,13 +413,13 @@ export default async function HomePage() {
                     <div className="bg-construction p-6 text-center">
                         <div className="bevel-outset p-6 bg-[#c0c0c0] max-w-2xl mx-auto">
                             <div className="inline-block bg-[#000080] text-[#ffff00] px-3 py-1 font-mono font-bold text-sm mb-3 border border-black">
-                                🚧 STOP OVERENGINEERING. START CRAFTING. 🚧
+                                🚧 CRAFTLY 95: MAKE AI MEDIOCRE AGAIN 🚧
                             </div>
                             <h2 className="text-2xl sm:text-3xl font-black uppercase text-black mb-2">
-                                Ready to Generate Clean HTML, CSS & JS?
+                                Craftly is an AI website builder that generates pure HTML/CSS/JavaScript
                             </h2>
                             <p className="text-xs sm:text-sm text-black mb-4 font-sans max-w-lg mx-auto">
-                                Join web developers, hobbyists, and creators rediscovering the speed, purity, and fun of raw web technologies.
+                                Rediscover the speed, purity, and simplicity of raw web technologies. No compilers, no dependency rot, no build steps.
                             </p>
                             <div className="flex flex-wrap items-center justify-center gap-3">
                                 <Link
@@ -500,12 +461,12 @@ export default async function HomePage() {
                             🌐 NETSCAPE 3.0 & IE 4.0 COMPATIBLE
                         </span>
                         <span className="bevel-inset px-2 py-1 bg-white font-mono text-[11px] text-black">
-                            ✨ POWERED BY GEMINI AI
+                            ✨ PURE HTML/CSS/JS ENGINE
                         </span>
                     </div>
 
                     <p className="text-[11px] text-[#808080] font-mono">
-                        © 1996 - 2026 Craftly. All Rights Reserved. Handcrafted with authentic HTML, CSS & JavaScript.
+                        © 1996 - 2026 Craftly. Craftly 95: Make AI Mediocre Again. Pure HTML, CSS & JavaScript AI Website Builder.
                     </p>
                 </footer>
 

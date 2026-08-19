@@ -13,7 +13,7 @@ export default function AuthLayout({ children }: AuthLayoutProps) {
                 <div className="win-titlebar">
                     <div className="flex items-center gap-2">
                         <span className="font-mono">🔐</span>
-                        <span>Craftly_Auth_Dialog.exe - [Windows 95 Security]</span>
+                        <span>Craftly_Auth_Dialog.exe - [Craftly 95: Make AI Mediocre Again]</span>
                     </div>
                     <div className="flex items-center">
                         <Link href="/" className="win-btn-control text-black no-underline">
@@ -31,10 +31,10 @@ export default function AuthLayout({ children }: AuthLayoutProps) {
                         </div>
                         <div>
                             <h1 className="text-lg font-black uppercase text-black tracking-tight">
-                                Craftly Studio Login
+                                Craftly 95 Login
                             </h1>
                             <p className="text-xs font-mono text-[#808080]">
-                                Authenticate to access your HTML, CSS & JS workspaces.
+                                Craftly is an AI website builder that generates pure HTML/CSS/JavaScript.
                             </p>
                         </div>
                     </div>
@@ -56,7 +56,7 @@ export default function AuthLayout({ children }: AuthLayoutProps) {
 
             {/* Bottom Copyright Note */}
             <p className="mt-4 text-xs font-mono text-[#808080] text-center">
-                Craftly Web Engine • 100% Client-Side Pure HTML/CSS/JS Generator
+                Craftly 95: Make AI Mediocre Again • Pure HTML/CSS/JavaScript AI Website Builder
             </p>
         </div>
     );
