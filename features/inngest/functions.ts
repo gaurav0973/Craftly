@@ -27,10 +27,72 @@ export interface CodeAgentState {
 export const codeAgentFunction = inngest.createFunction(
     { id: "code-agent", triggers: { event: "code-agent/run" } },
     async ({ event, step }) => {
+
+
         const sandboxId = await step.run("get-sandbox-id", async () => {
+            // Create a base sandbox (Node.js environment)
             const sandbox = await Sandbox.create({
-                template: "0awqf35ohrnx2e7zgxo4",
+                template: "base",
+                timeoutMs: 5 * 60 * 1000, // 5 min to install & scaffold
             });
+
+            // Install the static file server
+            await sandbox.commands.run(
+                "npm install -g serve 2>&1 | tail -5",
+                { timeoutMs: 60_000 },
+            );
+
+            // Create project directory structure
+            await sandbox.commands.run("mkdir -p /home/user/pages");
+
+            // Scaffold index.html
+            await sandbox.files.write(
+                "/home/user/index.html",
+                `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>App</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <p>Loading...</p>
+  <script src="script.js"></script>
+</body>
+</html>`,
+            );
+
+            // Scaffold style.css
+            await sandbox.files.write(
+                "/home/user/style.css",
+                `*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: system-ui, -apple-system, sans-serif; background: #f9fafb; color: #111827; }`,
+            );
+
+            // Scaffold script.js
+            await sandbox.files.write(
+                "/home/user/script.js",
+                `console.log('App ready');`,
+            );
+
+            // Start the static file server in the background on port 3000
+            await sandbox.commands.run(
+                "nohup serve /home/user -l 3000 --no-clipboard > /tmp/serve.log 2>&1 &",
+                { timeoutMs: 5_000 },
+            );
+
+            // Wait until the server is ready
+            for (let i = 0; i < 20; i++) {
+                try {
+                    const check = await sandbox.commands.run(
+                        "curl -s -o /dev/null -w '%{http_code}' http://localhost:3000",
+                        { timeoutMs: 3_000 },
+                    );
+                    if (check.stdout.trim() === "200") break;
+                } catch {}
+                await new Promise((r) => setTimeout(r, 500));
+            }
 
             return sandbox.sandboxId;
         });
@@ -47,17 +109,23 @@ export const codeAgentFunction = inngest.createFunction(
                     },
                 });
 
-                return messages.map((message:any) => ({
+                // Only pass the last few USER messages to avoid polluting
+                // the agent context with old error/debug conversation noise.
+                const userMessages = messages.filter(
+                    (m: any) => m.role === MessageRole.USER
+                );
+                // Take the last 3 user messages max
+                const recentUserMessages = userMessages.slice(-3);
+
+                return recentUserMessages.map((message: any) => ({
                     type: "text" as const,
-                    role:
-                        message.role === MessageRole.ASSISTANT
-                            ? ("assistant" as const)
-                            : ("user" as const),
+                    role: "user" as const,
                     content: message.content,
                 }));
             },
         );
 
+        
         const state = createState<CodeAgentState>(
             { sandboxId, summary: "", files: {} },
             { messages: previousMessages },
@@ -70,7 +138,7 @@ export const codeAgentFunction = inngest.createFunction(
 
         const codeAgent = createAgent({
             name: "code-agent",
-            description: "An expert coding agent",
+            description: "An expert front-end coding agent that builds HTML/CSS/JS apps",
             system: PROMPT,
             model: openai({
                 model: "gpt-4o-mini",
