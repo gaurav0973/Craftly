@@ -17,23 +17,33 @@ function formatDate(date: string | Date) {
 const PRESET_IDEAS = [
     {
         icon: "🕹️",
-        label: "2D Canvas Game",
-        prompt: "Build an arcade 2D Snake or Pong game with HTML5 canvas, keyboard controls, high score tracking in localStorage, and retro pixel art styling.",
+        label: "2D Arcade Game",
+        prompt: "Build an arcade 2D Snake & Pong game hub using pure HTML5 Canvas and Vanilla JavaScript. Include a game switcher to toggle between Snake and Pong, smooth 60fps canvas animation loops, keyboard controls (Arrow keys / WASD), difficulty selection (Easy/Hard), real-time score tracking, local high score leaderboard saved in localStorage, retro pixel font styling, and authentic 8-bit sound effects using Web Audio API.",
     },
     {
-        icon: "📋",
-        label: "Interactive Todo App",
-        prompt: "Create a modern Todo and Task Manager web app using pure HTML, CSS, and JS with drag-and-drop, category filters, dark mode toggle, and localStorage.",
+        icon: "📊",
+        label: "Admin Dashboard",
+        prompt: "Build a complete multi-page Windows 95 Executive Admin Dashboard web app using pure HTML, CSS, and JS. Include a landing overview page (index.html) with KPI stat panels (Visitors, Revenue, Server Health), interactive Chart.js canvas line and bar charts with retro palettes, a filterable data table with search and CSV export, a sub-page for User Management (/pages/users/) with modal dialogs to add/edit users, and a sub-page for System Settings (/pages/settings/), all linked via a persistent top navigation bar.",
     },
     {
         icon: "🛍️",
-        label: "E-Commerce Catalog",
-        prompt: "Build a responsive product store catalog with search, price filtering, product detail modals, and an interactive shopping cart with local checkout.",
+        label: "E-Commerce Store",
+        prompt: "Create a multi-page 90s Cyber Electronics E-Commerce store using pure HTML, CSS, and Vanilla JavaScript. Include a home catalog page (index.html) with vintage gadget products (Floppy Disks, CRT Monitors, Dial-up Modems), category filters, live keyword search, price sorting, and star ratings. Add a slide-out Shopping Cart with quantity controls and promo code discounts, a dedicated Contact & Order Inquiry sub-page (/pages/contact/) with form validation, and an About Our Web Shop sub-page (/pages/about/) with customer reviews and FAQ accordions.",
+    },
+    {
+        icon: "📋",
+        label: "Task & Note Manager",
+        prompt: "Build an interactive productivity suite styled like Windows 95 Notepad & Task Manager using pure HTML, CSS, and Vanilla JavaScript. Features include: adding/editing/deleting categorized tasks with priority badges (High, Medium, Low), drag-and-drop task reordering, due date countdowns, search and filter tabs (All, Active, Completed), a built-in rich scratchpad note-taker with auto-saving to localStorage, and import/export task data as JSON.",
     },
     {
         icon: "🎨",
         label: "GeoCities Portfolio",
-        prompt: "Create an authentic 90s personal webmaster portfolio with beveled windows, animated marquee ticker, hit counter, sound effects, and guestbook form.",
+        prompt: "Create an authentic 1990s GeoCities-style personal webmaster portfolio. Build a multi-page retro website with an index.html home hub featuring a Windows 95 desktop layout, animated marquee ticker, rotating 3D 'Under Construction' badges, a live visitor hit counter, an interactive retro MP3/MIDI web audio player with play/pause, a Projects sub-page (/pages/projects/) with 3D beveled cards and modal previews, and a working Interactive Guestbook sub-page (/pages/guestbook/) where visitors can leave comments stored in localStorage.",
+    },
+    {
+        icon: "🧮",
+        label: "Retro Calculator",
+        prompt: "Build a multifunctional retro Windows 95 Scientific Calculator & Unit Converter web app using pure HTML, CSS, and Vanilla JS. Features include a full grid of 3D beveled buttons with keyboard input support, standard math operations, memory store/recall (M+, M-, MR, MC), scientific functions (sin, cos, tan, sqrt, pow, log), a scrolling calculation history tape saved in localStorage with a copy button, and a toggleable Unit Converter panel for temperature, length, and currency conversions with live calculations.",
     },
 ];
 
@@ -262,7 +272,7 @@ export default function ProjectsPage() {
                                 onClick={() => setPrompt(PRESET_IDEAS[0].prompt)}
                                 className="btn-win95 text-xs py-1 px-3 font-bold"
                             >
-                                🕹️ Try &quot;2D Canvas Game&quot; Preset
+                                🕹️ Try &quot;2D Arcade Game&quot; Preset
                             </button>
                         </div>
                     )}

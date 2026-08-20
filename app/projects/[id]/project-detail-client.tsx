@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useMemo } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useGetMessages, useCreateMessage } from "@/features/message/hooks/message";
@@ -84,6 +84,47 @@ export default function ProjectDetailClient({ project }: ProjectDetailClientProp
     const latestFragment = [...allMessages]
         .reverse()
         .find((m) => m.role === "ASSISTANT" && m.fragments?.sandboxUrl)?.fragments;
+
+    // Detect all HTML pages in the project for instant UI navigation
+    const htmlPages = useMemo(() => {
+        if (!latestFragment?.files) return [];
+        const pages: { label: string; path: string }[] = [];
+        const keys = Object.keys(latestFragment.files).sort();
+
+        // 1. Home page first
+        if (keys.includes("index.html")) {
+            pages.push({ label: "🏠 Home (/)", path: "/" });
+        }
+
+        // 2. Sub-pages (e.g. pages/contact/index.html or pages/about/index.html)
+        for (const key of keys) {
+            if (key === "index.html") continue;
+            if (key.endsWith("/index.html")) {
+                const route = "/" + key.replace(/\/index\.html$/, "");
+                const pageName = route.split("/").pop() || route;
+                const capitalized = pageName.charAt(0).toUpperCase() + pageName.slice(1);
+                pages.push({ label: `📄 ${capitalized} (${route})`, path: `${route}/` });
+            } else if (key.endsWith(".html")) {
+                pages.push({ label: `📄 ${key} (/${key})`, path: `/${key}` });
+            }
+        }
+        return pages;
+    }, [latestFragment?.files]);
+
+    const [selectedPagePath, setSelectedPagePath] = useState<string>("/");
+
+    // Reset selected path if it doesn't exist in current pages
+    useEffect(() => {
+        if (htmlPages.length > 0 && !htmlPages.some((p) => p.path === selectedPagePath)) {
+            setSelectedPagePath(htmlPages[0].path);
+        }
+    }, [htmlPages, selectedPagePath]);
+
+    const currentPreviewUrl = latestFragment?.sandboxUrl
+        ? (selectedPagePath === "/"
+            ? latestFragment.sandboxUrl
+            : `${latestFragment.sandboxUrl.replace(/\/$/, "")}${selectedPagePath}`)
+        : "";
 
     // Determine if AI is currently processing
     const lastMessage = allMessages[allMessages.length - 1];
@@ -338,12 +379,35 @@ export default function ProjectDetailClient({ project }: ProjectDetailClientProp
                         </button>
                     </div>
 
+                    {/* Page Navigator Dropdown (shown if multiple pages exist) */}
+                    {htmlPages.length > 1 && (
+                        <div className="flex items-center gap-1">
+                            <span className="text-[11px] font-mono font-bold text-black flex items-center gap-1">
+                                <span>📄</span>
+                                <span>PAGE:</span>
+                            </span>
+                            <select
+                                id="page-route-selector"
+                                value={selectedPagePath}
+                                onChange={(e) => setSelectedPagePath(e.target.value)}
+                                className="btn-win95 text-xs py-0.5 px-1.5 font-mono font-bold bg-white text-black outline-none cursor-pointer border border-[#808080]"
+                                title="Switch between website pages"
+                            >
+                                {htmlPages.map((page) => (
+                                    <option key={page.path} value={page.path}>
+                                        {page.label}
+                                    </option>
+                                ))}
+                            </select>
+                        </div>
+                    )}
+
                     {/* Browser Address Bar */}
                     <div className="flex-1 min-w-[200px] flex items-center gap-1">
                         <div className="bevel-inset flex-1 flex items-center gap-1.5 px-2 py-0.5 bg-white font-mono text-xs text-black">
                             <span className="text-[#808080] font-bold">URL:</span>
                             <span className="truncate">
-                                {latestFragment?.sandboxUrl || "http://localhost:craftly/index.html"}
+                                {currentPreviewUrl || latestFragment?.sandboxUrl || "http://localhost:craftly/index.html"}
                             </span>
                         </div>
 
@@ -360,7 +424,7 @@ export default function ProjectDetailClient({ project }: ProjectDetailClientProp
 
                                 <a
                                     id="open-sandbox-external"
-                                    href={latestFragment.sandboxUrl}
+                                    href={currentPreviewUrl || latestFragment.sandboxUrl}
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     title="Open website in new browser tab"
@@ -378,9 +442,9 @@ export default function ProjectDetailClient({ project }: ProjectDetailClientProp
                     {latestFragment ? (
                         activeTab === "preview" ? (
                             <iframe
-                                key={iframeKey}
+                                key={`${iframeKey}-${selectedPagePath}`}
                                 id="sandbox-preview"
-                                src={latestFragment.sandboxUrl}
+                                src={currentPreviewUrl || latestFragment.sandboxUrl}
                                 className="w-full h-full border-none bg-white"
                                 title={latestFragment.title}
                                 sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-modals"

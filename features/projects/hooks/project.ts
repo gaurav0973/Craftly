@@ -36,7 +36,6 @@ export const useCreateProject = () => {
 
 export const useDeleteProject = () => {
     const queryClient = useQueryClient();
-
     return useMutation({
         mutationFn: async (id: string) =>
             unwrapActionResult(await deleteProject(id)),
