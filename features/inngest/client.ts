@@ -1,5 +1,6 @@
 import { Inngest } from "inngest";
 
 export const inngest = new Inngest({
-    id: "craftly"
+    id: "craftly",
+    eventKey: process.env.INNGEST_EVENT_KEY
 })
