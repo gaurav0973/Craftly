@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { useCreateProject, useGetProjects } from "@/features/projects/hooks/project";
+import { useCreateProject, useDeleteProject, useGetProjects } from "@/features/projects/hooks/project";
 
 function formatDate(date: string | Date) {
     return new Intl.DateTimeFormat("en-US", {
@@ -40,8 +40,10 @@ const PRESET_IDEAS = [
 export default function ProjectsPage() {
     const router = useRouter();
     const [prompt, setPrompt] = useState("");
+    const [projectToDelete, setProjectToDelete] = useState<{ id: string; name: string } | null>(null);
     const { data: projects, isLoading: projectsLoading } = useGetProjects();
     const createProject = useCreateProject();
+    const deleteProject = useDeleteProject();
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -54,6 +56,16 @@ export default function ProjectsPage() {
         }
     };
 
+    const handleDelete = async () => {
+        if (!projectToDelete || deleteProject.isPending) return;
+        try {
+            await deleteProject.mutateAsync(projectToDelete.id);
+            setProjectToDelete(null);
+        } catch (error) {
+            console.error("Failed to delete project:", error);
+        }
+    };
+
     const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
         if (e.key === "Enter" && (e.metaKey || e.ctrlKey)) {
             e.preventDefault();
@@ -63,6 +75,58 @@ export default function ProjectsPage() {
 
     return (
         <div className="flex-1 max-w-5xl w-full mx-auto px-3 py-4 flex flex-col gap-6">
+            {/* ── Delete Confirmation Dialog (Windows 95 Modal) ────── */}
+            {projectToDelete && (
+                <div className="fixed inset-0 z-50 bg-black/50 flex items-center justify-center p-4">
+                    <div className="win-window max-w-md w-full shadow-2xl">
+                        <div className="win-titlebar bg-gradient-to-r from-[#800000] to-[#cc0000]">
+                            <div className="flex items-center gap-1.5">
+                                <span>⚠️</span>
+                                <span>Confirm File Deletion</span>
+                            </div>
+                            <button
+                                type="button"
+                                onClick={() => setProjectToDelete(null)}
+                                className="win-btn-control text-black"
+                            >
+                                ✕
+                            </button>
+                        </div>
+                        <div className="p-4 bg-[#c0c0c0]">
+                            <div className="flex items-start gap-3 mb-4">
+                                <span className="text-3xl">🗑️</span>
+                                <div>
+                                    <h3 className="font-bold text-sm text-black mb-1">
+                                        Delete Website Project?
+                                    </h3>
+                                    <p className="text-xs font-mono text-black leading-relaxed">
+                                        Are you sure you want to permanently delete <strong className="text-[#000080]">&quot;{projectToDelete.name}&quot;</strong>? This will remove all generated HTML, CSS, and JS files.
+                                    </p>
+                                </div>
+                            </div>
+                            <div className="flex items-center justify-end gap-2 pt-2 border-t border-[#808080]">
+                                <button
+                                    type="button"
+                                    onClick={() => setProjectToDelete(null)}
+                                    disabled={deleteProject.isPending}
+                                    className="btn-win95 text-xs py-1.5 px-4 font-bold"
+                                >
+                                    Cancel
+                                </button>
+                                <button
+                                    type="button"
+                                    onClick={handleDelete}
+                                    disabled={deleteProject.isPending}
+                                    className="btn-win95 text-xs py-1.5 px-4 font-bold bg-[#ff0000] text-white hover:bg-[#cc0000]"
+                                >
+                                    {deleteProject.isPending ? "Deleting..." : "Delete Project"}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
+
             {/* ── Prompt Console Window ────────────────────────────── */}
             <section className="win-window">
                 {/* Title bar */}
@@ -209,10 +273,10 @@ export default function ProjectsPage() {
                             <table className="table-retro">
                                 <thead>
                                     <tr>
-                                        <th style={{ width: "40%" }}>Website Project</th>
-                                        <th style={{ width: "25%" }}>Date Created</th>
-                                        <th style={{ width: "15%" }}>Type</th>
-                                        <th style={{ width: "20%", textAlign: "center" }}>Action</th>
+                                        <th style={{ width: "38%" }}>Website Project</th>
+                                        <th style={{ width: "24%" }}>Date Created</th>
+                                        <th style={{ width: "14%" }}>Type</th>
+                                        <th style={{ width: "24%", textAlign: "center" }}>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -221,7 +285,7 @@ export default function ProjectsPage() {
                                             <td className="font-bold">
                                                 <div className="flex items-center gap-2">
                                                     <span className="text-base">📄</span>
-                                                    <span className="truncate max-w-[280px]" title={project.name}>
+                                                    <span className="truncate max-w-[260px]" title={project.name}>
                                                         {project.name}
                                                     </span>
                                                 </div>
@@ -235,14 +299,25 @@ export default function ProjectsPage() {
                                                 </span>
                                             </td>
                                             <td className="text-center">
-                                                <a
-                                                    href={`/projects/${project.id}`}
-                                                    id={`open-project-${project.id}`}
-                                                    className="btn-win95 btn-win95-primary text-[11px] py-0.5 px-2 font-bold inline-flex items-center gap-1"
-                                                >
-                                                    <span>Open Studio</span>
-                                                    <span>→</span>
-                                                </a>
+                                                <div className="flex items-center justify-center gap-1.5">
+                                                    <a
+                                                        href={`/projects/${project.id}`}
+                                                        id={`open-project-${project.id}`}
+                                                        className="btn-win95 btn-win95-primary text-[11px] py-0.5 px-2 font-bold inline-flex items-center gap-1"
+                                                    >
+                                                        <span>Open</span>
+                                                        <span>→</span>
+                                                    </a>
+                                                    <button
+                                                        type="button"
+                                                        id={`delete-project-${project.id}`}
+                                                        onClick={() => setProjectToDelete({ id: project.id, name: project.name })}
+                                                        className="btn-win95 text-[11px] py-0.5 px-1.5 font-bold text-[#cc0000] hover:bg-[#ff0000] hover:text-white"
+                                                        title={`Delete ${project.name}`}
+                                                    >
+                                                        🗑️ Delete
+                                                    </button>
+                                                </div>
                                             </td>
                                         </tr>
                                     ))}
@@ -255,3 +330,4 @@ export default function ProjectsPage() {
         </div>
     );
 }
+

@@ -2,10 +2,12 @@
 
 import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useGetMessages, useCreateMessage } from "@/features/message/hooks/message";
+import { useDeleteProject } from "@/features/projects/hooks/project";
 import { MarkdownMessage } from "@/components/chat/markdown-message";
 import { CodeEditorView } from "@/components/editor/code-editor-view";
-import { Play, Code2, ExternalLink, RotateCcw, ArrowLeft, ArrowRight } from "lucide-react";
+import { Play, Code2, ExternalLink, RotateCcw, Trash2 } from "lucide-react";
 
 interface Fragment {
     id: string;
@@ -35,14 +37,17 @@ interface ProjectDetailClientProps {
 }
 
 export default function ProjectDetailClient({ project }: ProjectDetailClientProps) {
+    const router = useRouter();
     const [newMessage, setNewMessage] = useState("");
     const [activeTab, setActiveTab] = useState<"preview" | "code">("preview");
     const [iframeKey, setIframeKey] = useState(0);
+    const [showDeleteModal, setShowDeleteModal] = useState(false);
     const messagesEndRef = useRef<HTMLDivElement>(null);
     const textareaRef = useRef<HTMLTextAreaElement>(null);
 
     const { data: messages, isLoading: messagesLoading } = useGetMessages(project.id);
     const createMessage = useCreateMessage(project.id);
+    const deleteProject = useDeleteProject();
 
     // Auto-scroll chat to bottom
     useEffect(() => {
@@ -55,6 +60,16 @@ export default function ProjectDetailClient({ project }: ProjectDetailClientProp
         const content = newMessage.trim();
         setNewMessage("");
         await createMessage.mutateAsync(content);
+    };
+
+    const handleDelete = async () => {
+        if (deleteProject.isPending) return;
+        try {
+            await deleteProject.mutateAsync(project.id);
+            router.push("/projects");
+        } catch (error) {
+            console.error("Failed to delete project:", error);
+        }
     };
 
     const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
@@ -79,7 +94,59 @@ export default function ProjectDetailClient({ project }: ProjectDetailClientProp
             allMessages.filter((m) => m.role === "USER").length);
 
     return (
-        <div className="flex-1 p-2 bg-90s-tile flex flex-col md:flex-row gap-2 overflow-hidden h-[calc(100vh-4.2rem)]">
+        <div className="flex-1 p-2 bg-90s-tile flex flex-col md:flex-row gap-2 overflow-hidden h-[calc(100vh-4.2rem)] relative">
+            {/* ── Delete Confirmation Dialog ──────────────────────── */}
+            {showDeleteModal && (
+                <div className="fixed inset-0 z-50 bg-black/50 flex items-center justify-center p-4">
+                    <div className="win-window max-w-md w-full shadow-2xl">
+                        <div className="win-titlebar bg-gradient-to-r from-[#800000] to-[#cc0000]">
+                            <div className="flex items-center gap-1.5">
+                                <span>⚠️</span>
+                                <span>Confirm Project Deletion</span>
+                            </div>
+                            <button
+                                type="button"
+                                onClick={() => setShowDeleteModal(false)}
+                                className="win-btn-control text-black"
+                            >
+                                ✕
+                            </button>
+                        </div>
+                        <div className="p-4 bg-[#c0c0c0]">
+                            <div className="flex items-start gap-3 mb-4">
+                                <span className="text-3xl">🗑️</span>
+                                <div>
+                                    <h3 className="font-bold text-sm text-black mb-1">
+                                        Delete &quot;{project.name}&quot;?
+                                    </h3>
+                                    <p className="text-xs font-mono text-black leading-relaxed">
+                                        Are you sure you want to delete this project? All generated HTML, CSS, JavaScript files and conversation history will be permanently deleted.
+                                    </p>
+                                </div>
+                            </div>
+                            <div className="flex items-center justify-end gap-2 pt-2 border-t border-[#808080]">
+                                <button
+                                    type="button"
+                                    onClick={() => setShowDeleteModal(false)}
+                                    disabled={deleteProject.isPending}
+                                    className="btn-win95 text-xs py-1.5 px-4 font-bold"
+                                >
+                                    Cancel
+                                </button>
+                                <button
+                                    type="button"
+                                    onClick={handleDelete}
+                                    disabled={deleteProject.isPending}
+                                    className="btn-win95 text-xs py-1.5 px-4 font-bold bg-[#ff0000] text-white hover:bg-[#cc0000]"
+                                >
+                                    {deleteProject.isPending ? "Deleting..." : "Delete Project"}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
+
             {/* ── Left Window: AI Webmaster Console ──────────────── */}
             <div className="w-full md:w-[420px] lg:w-[460px] flex-shrink-0 win-window flex flex-col overflow-hidden">
                 {/* Window Title Bar */}
@@ -111,9 +178,19 @@ export default function ProjectDetailClient({ project }: ProjectDetailClientProp
                             {isProcessing ? "COMPILING HTML/CSS/JS..." : "READY"}
                         </span>
                     </div>
-                    <span className="text-[#808080]">
-                        {allMessages.length} command{allMessages.length !== 1 ? "s" : ""}
-                    </span>
+                    <div className="flex items-center gap-2">
+                        <span className="text-[#808080]">
+                            {allMessages.length} command{allMessages.length !== 1 ? "s" : ""}
+                        </span>
+                        <button
+                            type="button"
+                            onClick={() => setShowDeleteModal(true)}
+                            className="btn-win95 text-[10px] py-0 px-1.5 font-bold text-[#cc0000] hover:bg-[#ff0000] hover:text-white"
+                            title="Delete this project"
+                        >
+                            🗑️
+                        </button>
+                    </div>
                 </div>
 
                 {/* Messages History List */}

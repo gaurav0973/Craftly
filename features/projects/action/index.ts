@@ -79,3 +79,29 @@ export async function getProjectById(id: string){
 
     return project
 }
+
+export async function deleteProject(id: string) {
+    const user = await getCurrentUser();
+    if (!user) {
+        return {
+            error: "User not found"
+        };
+    }
+
+    const existing = await prisma.project.findFirst({
+        where: { id, userId: user.id }
+    });
+
+    if (!existing) {
+        return {
+            error: "Project not found or unauthorized"
+        };
+    }
+
+    await prisma.project.delete({
+        where: { id }
+    });
+
+    return { success: true, id };
+}
+

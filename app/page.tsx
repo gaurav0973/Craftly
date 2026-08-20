@@ -119,7 +119,7 @@ export default async function HomePage() {
                                         <span>9</span>
                                         <span>1</span>
                                     </div>
-                                    <span className="text-xs text-[#808080] font-mono hidden sm:inline">SINCE 1996</span>
+                                    <span className="text-xs text-[#808080] font-mono hidden sm:inline">SINCE 2026</span>
                                 </div>
                             </div>
 

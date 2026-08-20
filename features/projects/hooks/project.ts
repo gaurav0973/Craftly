@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { createProject, getProjectById, getProjects } from "../action";
+import { createProject, deleteProject, getProjectById, getProjects } from "../action";
 
 export type ActionError = {
     error: string;
@@ -34,6 +34,18 @@ export const useCreateProject = () => {
     })
 }
 
+export const useDeleteProject = () => {
+    const queryClient = useQueryClient();
+
+    return useMutation({
+        mutationFn: async (id: string) =>
+            unwrapActionResult(await deleteProject(id)),
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ["projects"] });
+        }
+    });
+};
+
 export const useGetProjects = () => {
     return useQuery({
         queryKey: ["projects"],
@@ -47,3 +59,4 @@ export const useGetProjectById = (id: string) => {
         queryFn: async () => unwrapActionResult(await getProjectById(id)),
     })
 }
+
